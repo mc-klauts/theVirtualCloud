@@ -38,22 +38,37 @@ import eu.thevirtualcloud.api.language.LanguageDocument
 
 class SimpleCloudLanguageManager: ICloudLanguageManager {
 
-    private val registeredDocuments: HashMap<String, LanguageDocument> = HashMap()
-
-    override fun getSelectedLanguageFromCashed(): String {
-        TODO("Not yet implemented")
-    }
+    private val registeredDocuments: HashMap<String, ArrayList<LanguageDocument>> = HashMap()
 
     override fun getSelectedLanguage(): String {
-        TODO("Not yet implemented")
+        return "de"
     }
 
     override fun registerDocument(document: LanguageDocument) {
-        this.registeredDocuments[document.getName()] = document
+        if (this.registeredDocuments.containsKey(document.getName().substring(1))) {
+            this.registeredDocuments[document.getName().substring(1)]!!.add(document)
+            if (!document.getFile().exists()) {
+                document.updateDocument()
+            } else {
+                document.updateCashed()
+            }
+        } else {
+            val hashed: ArrayList<LanguageDocument> = ArrayList()
+            hashed.add(document)
+            this.registeredDocuments[document.getName().substring(1)] = hashed
+            if (!document.getFile().exists()) {
+                document.updateDocument()
+            } else {
+                document.updateCashed()
+            }
+        }
     }
 
-    override fun getCashedEntry(property: String) {
-        TODO("Not yet implemented")
+    override fun getCashedEntry(property: String): String {
+        for (doc in this.registeredDocuments[property.substring(1)]!!) {
+            return doc.getEntryFromCashed(property.substring(2, property.length))
+        }
+        return "null"
     }
 
 

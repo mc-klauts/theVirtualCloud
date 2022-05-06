@@ -24,6 +24,7 @@
 
 package eu.thevirtualcloud.api.language
 
+import com.google.gson.JsonObject
 import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.common.INameable
 import eu.thevirtualcloud.api.utilities.FileUtils
@@ -40,7 +41,7 @@ import java.io.File
 
 abstract class LanguageDocument(private val name: String): INameable {
 
-    private val entries: HashMap<String, String> = HashMap()
+    private var entries: JsonObject = JsonObject()
     private val remoteFile: File = File(CloudAPI.instance.getCloudContentLoader().getCloudConstructionContent().languagePathFolder + "\\" + getName() + ".json")
 
     final override fun getName(): String {
@@ -48,15 +49,23 @@ abstract class LanguageDocument(private val name: String): INameable {
     }
 
     fun registerEntry(property: String, entry: String) {
-        this.entries[property] = entry
+        this.entries.addProperty(property, entry)
     }
 
     fun getEntryFromCashed(property: String): String {
-        return this.entries[property]!!
+        return this.entries[property].asString
+    }
+
+    fun updateCashed() {
+        this.entries = FileUtils.readObject(this.remoteFile, JsonObject::class.java)
     }
 
     fun updateDocument() {
         FileUtils.writeObject(remoteFile, entries)
+    }
+
+    fun getFile(): File {
+        return this.remoteFile
     }
 
 }

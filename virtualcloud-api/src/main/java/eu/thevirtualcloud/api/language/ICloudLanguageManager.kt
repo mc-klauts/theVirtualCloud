@@ -35,12 +35,10 @@ package eu.thevirtualcloud.api.language
 
 interface ICloudLanguageManager {
 
-    fun getSelectedLanguageFromCashed(): String
-
     fun getSelectedLanguage(): String
 
     fun registerDocument(document: LanguageDocument)
 
-    fun getCashedEntry(property: String)
+    fun getCashedEntry(property: String): String
 
 }

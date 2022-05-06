@@ -32,7 +32,6 @@ import eu.thevirtualcloud.api.content.IContentLoader
 import eu.thevirtualcloud.api.content.impl.SimpleContentLoader
 import eu.thevirtualcloud.api.event.ICloudEventManager
 import eu.thevirtualcloud.api.event.impl.SimpleCloudEventManager
-import eu.thevirtualcloud.api.event.impl.SimpleCloudEventRegistry
 import eu.thevirtualcloud.api.event.impl.types.CloudAPIBootEvent
 import eu.thevirtualcloud.api.network.ICloudChannelManager
 import eu.thevirtualcloud.api.network.impl.SimpleCloudChannelManager

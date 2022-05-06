@@ -28,7 +28,6 @@ import eu.thevirtualcloud.api.CloudAPI;
 import eu.thevirtualcloud.api.common.UIDDabble;
 import eu.thevirtualcloud.api.event.impl.SimpleCloudEventRegistry;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**

@@ -105,7 +105,7 @@ class FileUtils {
         }
 
         @SneakyThrows
-        fun read(file: File): String? {
+        fun read(file: File): String {
             if (!file.exists()) {
                 val path: String = StringUtils.removeEnd(file.absolutePath, "\\" + file.name)
                 val dir = File(path)
@@ -125,7 +125,7 @@ class FileUtils {
         }
 
         @Throws(IOException::class)
-        private fun download(urlStr: String, file: File) {
+        fun download(urlStr: String, file: File) {
             val url = URL(urlStr)
             val bis = BufferedInputStream(url.openStream())
             val fis = FileOutputStream(file)
@@ -139,7 +139,7 @@ class FileUtils {
         }
 
         @Throws(IOException::class)
-        private fun extractFileContentFromArchive(file: File, zis: ZipInputStream) {
+        fun extractFileContentFromArchive(file: File, zis: ZipInputStream) {
             val fos = FileOutputStream(file)
             val bos = BufferedOutputStream(fos, BUFFER)
             var len = 0
@@ -151,7 +151,7 @@ class FileUtils {
             bos.close()
         }
 
-        private fun extract(source: String, root: File) {
+        fun extract(source: String, root: File) {
             try {
                 if (!root.exists()) {
                     root.mkdir()
@@ -202,7 +202,7 @@ class FileUtils {
             write(file, raw)
         }
 
-        private fun <T> readObject(file: File, classType: Class<T>): T {
+        fun <T> readObject(file: File, classType: Class<T>): T {
             return gson.fromJson(read(file), classType)
         }
 

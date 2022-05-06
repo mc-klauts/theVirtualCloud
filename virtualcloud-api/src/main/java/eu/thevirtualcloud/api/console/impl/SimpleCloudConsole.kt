@@ -26,8 +26,6 @@ package eu.thevirtualcloud.api.console.impl
 
 import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.console.ICloudConsole
-import eu.thevirtualcloud.api.event.EventHandler
-import eu.thevirtualcloud.api.event.ICloudEventRegistry
 import eu.thevirtualcloud.api.event.impl.types.CloudInputEvent
 import java.io.Console
 import java.time.LocalDateTime
