@@ -34,6 +34,8 @@ import eu.thevirtualcloud.master.content.CloudNetworkHandler
 import eu.thevirtualcloud.master.dependencies.IDependencyLoader
 import eu.thevirtualcloud.master.dependencies.SimpleDependencyLoader
 import eu.thevirtualcloud.master.layout.ConsoleBaseLoader
+import eu.thevirtualcloud.master.runner.key.IKeyGenerator
+import eu.thevirtualcloud.master.runner.key.SimpleKeyGenerator
 
 /**
  *
@@ -62,6 +64,7 @@ class CloudLauncher {
     private val cloudDocumentHandler: CloudDocumentHandler = CloudDocumentHandler()
     private val dependencyLoader: IDependencyLoader = SimpleDependencyLoader()
     private val cloudEventRegistry: ICloudEventRegistry = ICloudEventRegistry.insert()
+    private val cloudKeyGenerator: IKeyGenerator = SimpleKeyGenerator()
 
     init {
 
@@ -74,6 +77,8 @@ class CloudLauncher {
     }
 
     fun getCloudApi(): CloudAPI = this.cloudApi
+
+    fun getCloudKeyGenerator(): IKeyGenerator = this.cloudKeyGenerator
 
     fun getCloudBuilder(): IConstructionLoader = this.cloudBuilder
 

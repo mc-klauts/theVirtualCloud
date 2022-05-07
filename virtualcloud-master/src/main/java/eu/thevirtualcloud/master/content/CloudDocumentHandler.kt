@@ -24,11 +24,14 @@
 
 package eu.thevirtualcloud.master.content
 
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonElement
 import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.config.IDocument
 import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
 import eu.thevirtualcloud.api.console.question.IQuestSession
 import eu.thevirtualcloud.api.content.types.CloudConstructionContent
+import eu.thevirtualcloud.api.threading.CloudWrapperArray
 import eu.thevirtualcloud.api.utilities.FileUtils
 import eu.thevirtualcloud.master.CloudLauncher
 import java.io.File
@@ -44,8 +47,11 @@ import java.io.File
 
 class CloudDocumentHandler {
 
+    val gson = GsonBuilder().setPrettyPrinting().create()!!
+
     val cloudContentDocument: IDocument = CloudAPI.instance.getCloudConfigFactory().getCloudConfiguration("CloudContent", "")
     val cloudDatabaseDocument: IDocument = CloudAPI.instance.getCloudConfigFactory().getCloudConfiguration("database", "storage")
+    val cloudWrapperDocument: IDocument = CloudAPI.instance.getCloudConfigFactory().getCloudConfiguration("wrappers", "storage")
     var cloudConstructionBase: CloudConstructionContent
 
     init {
@@ -53,8 +59,8 @@ class CloudDocumentHandler {
         val cloudConstructionBase: CloudConstructionContent = FileUtils.readObject(File("construction.builder"), CloudConstructionContent::class.java)
         CloudLauncher.instance.getCloudBuilder().load(
             cloudConstructionBase.dependenciesFolder,
-            cloudConstructionBase.wrapperFolder,
             cloudConstructionBase.versionsFolder,
+            cloudConstructionBase.wrapperProduceFolder,
             cloudConstructionBase.languagePathFolder)
 
         if (!FileUtils.exists("construction.builder")) FileUtils.writeObject(File("construction.builder"), CloudConstructionContent())
@@ -71,12 +77,25 @@ class CloudDocumentHandler {
         } else {
             cloudContentDocument.loadCached()
         }
+        if (this.cloudWrapperDocument.isEmpty()) {
+            cloudWrapperDocument.setDefault("remote", gson.toJson(CloudWrapperArray()))
+        }
         if (this.cloudDatabaseDocument.isEmpty()) {
             CloudAPI.instance.getCloudConsole().write(ConsoleColorPane.ANSI_BRIGHT_RED + "Unable to locate database information")
         } else {
             CloudAPI.instance.getCloudConsole().write("The cloud has been connected to the database")
         }
 
+    }
+
+    fun readWrappers(): CloudWrapperArray {
+        return gson.fromJson(this.cloudWrapperDocument.getString("remote"), CloudWrapperArray::class.java)
+    }
+
+    fun saveWrapperArray(array: CloudWrapperArray) {
+        this.cloudWrapperDocument.setDefault("remote", gson.toJson(array))
+        this.cloudWrapperDocument.updateConfiguration()
+        this.cloudWrapperDocument.loadCached()
     }
 
     private fun askPort(): Int {

@@ -39,6 +39,6 @@ class CloudConstructionContent {
     val languagePathFolder: String = "language"
     val dependenciesFolder: String = "dependencies"
     val versionsFolder: String = "storage//versionsJars"
-    val wrapperFolder: String = "storage//wrappers"
+    val wrapperProduceFolder: String = "storage//produce"
 
 }

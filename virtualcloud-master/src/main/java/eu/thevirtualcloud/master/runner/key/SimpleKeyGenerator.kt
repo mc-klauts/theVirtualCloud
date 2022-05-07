@@ -22,14 +22,9 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.master.layout
+package eu.thevirtualcloud.master.runner.key
 
-import eu.thevirtualcloud.api.CloudAPI
-import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
-import eu.thevirtualcloud.master.commands.CloudDatabaseCommand
-import eu.thevirtualcloud.master.commands.CloudHelpCommand
-import eu.thevirtualcloud.master.commands.CloudStopCommand
-import eu.thevirtualcloud.master.commands.CloudWrapperCommand
+import java.util.*
 
 /**
  *
@@ -40,16 +35,24 @@ import eu.thevirtualcloud.master.commands.CloudWrapperCommand
  *
  */
 
-class ConsoleBaseLoader {
+class SimpleKeyGenerator: IKeyGenerator {
 
-    init {
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("stop", CloudStopCommand())
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("help", CloudHelpCommand())
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("database", CloudDatabaseCommand())
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("produce", CloudWrapperCommand())
-        CloudAPI.instance.getCloudConsole().write("the registry loaded" + ConsoleColorPane.ANSI_BRIGHT_GREEN + " " + CloudAPI.instance.getCloudCommandHandler().commands().size + ConsoleColorPane.ANSI_RESET +" commands")
-        print(CloudAPI.instance.getCloudConsole().profilePrefix())
-        CloudAPI.instance.getCloudCommandHandler().listen(true)
+    override fun generatePassword(length: Int): String {
+        val capitalCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        val lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz"
+        val specialCharacters = "!@#$"
+        val numbers = "1234567890"
+        val combinedChars = capitalCaseLetters + lowerCaseLetters + specialCharacters + numbers
+        val random = Random()
+        val password = CharArray(length)
+        password[0] = lowerCaseLetters[random.nextInt(lowerCaseLetters.length)]
+        password[1] = capitalCaseLetters[random.nextInt(capitalCaseLetters.length)]
+        password[2] = specialCharacters[random.nextInt(specialCharacters.length)]
+        password[3] = numbers[random.nextInt(numbers.length)]
+        for (i in 4 until length) {
+            password[i] = combinedChars[random.nextInt(combinedChars.length)]
+        }
+        return String(password)
     }
 
 }

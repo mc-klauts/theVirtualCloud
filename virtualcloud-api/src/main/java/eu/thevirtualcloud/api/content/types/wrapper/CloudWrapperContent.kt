@@ -22,14 +22,7 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.master.layout
-
-import eu.thevirtualcloud.api.CloudAPI
-import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
-import eu.thevirtualcloud.master.commands.CloudDatabaseCommand
-import eu.thevirtualcloud.master.commands.CloudHelpCommand
-import eu.thevirtualcloud.master.commands.CloudStopCommand
-import eu.thevirtualcloud.master.commands.CloudWrapperCommand
+package eu.thevirtualcloud.api.content.types.wrapper
 
 /**
  *
@@ -40,16 +33,14 @@ import eu.thevirtualcloud.master.commands.CloudWrapperCommand
  *
  */
 
-class ConsoleBaseLoader {
+class CloudWrapperContent(val name: String, val key: String, val masterHost: String, val masterPort: Int) {
 
-    init {
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("stop", CloudStopCommand())
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("help", CloudHelpCommand())
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("database", CloudDatabaseCommand())
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("produce", CloudWrapperCommand())
-        CloudAPI.instance.getCloudConsole().write("the registry loaded" + ConsoleColorPane.ANSI_BRIGHT_GREEN + " " + CloudAPI.instance.getCloudCommandHandler().commands().size + ConsoleColorPane.ANSI_RESET +" commands")
-        print(CloudAPI.instance.getCloudConsole().profilePrefix())
-        CloudAPI.instance.getCloudCommandHandler().listen(true)
-    }
+    private val host: String = "127.0.0.1"
+
+    private val storageFolder = "storage"
+    private val groupsFolder = "storage//groups"
+    private val templatesFolder = "templates"
+    private val temp = "temp"
+    private val staticFolder = "static"
 
 }

@@ -22,14 +22,11 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.master.layout
+package eu.thevirtualcloud.api.content.types.service
 
-import eu.thevirtualcloud.api.CloudAPI
-import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
-import eu.thevirtualcloud.master.commands.CloudDatabaseCommand
-import eu.thevirtualcloud.master.commands.CloudHelpCommand
-import eu.thevirtualcloud.master.commands.CloudStopCommand
-import eu.thevirtualcloud.master.commands.CloudWrapperCommand
+import eu.thevirtualcloud.api.content.RunnerType
+import eu.thevirtualcloud.api.content.ServiceType
+import eu.thevirtualcloud.api.content.ServiceVersion
 
 /**
  *
@@ -40,16 +37,5 @@ import eu.thevirtualcloud.master.commands.CloudWrapperCommand
  *
  */
 
-class ConsoleBaseLoader {
-
-    init {
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("stop", CloudStopCommand())
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("help", CloudHelpCommand())
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("database", CloudDatabaseCommand())
-        CloudAPI.instance.getCloudCommandHandler().registerCommand("produce", CloudWrapperCommand())
-        CloudAPI.instance.getCloudConsole().write("the registry loaded" + ConsoleColorPane.ANSI_BRIGHT_GREEN + " " + CloudAPI.instance.getCloudCommandHandler().commands().size + ConsoleColorPane.ANSI_RESET +" commands")
-        print(CloudAPI.instance.getCloudConsole().profilePrefix())
-        CloudAPI.instance.getCloudCommandHandler().listen(true)
-    }
-
+class CloudServiceGroup(val wrapper: String, val name: String, val runnerType: RunnerType, val serviceType: ServiceType, val version: ServiceVersion) {
 }
