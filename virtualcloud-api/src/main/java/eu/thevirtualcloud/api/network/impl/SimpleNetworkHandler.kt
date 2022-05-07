@@ -39,8 +39,8 @@ import io.netty.channel.SimpleChannelInboundHandler
 
 class SimpleNetworkHandler: SimpleChannelInboundHandler<ByteBuf>() {
 
-    override fun messageReceived(p0: ChannelHandlerContext?, p1: ByteBuf?) {
+    override fun channelRead0(p0: ChannelHandlerContext?, p1: ByteBuf?) {
         TODO("Not yet implemented")
     }
-    
+
 }

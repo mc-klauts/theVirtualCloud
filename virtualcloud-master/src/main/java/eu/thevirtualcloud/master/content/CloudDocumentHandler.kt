@@ -60,7 +60,7 @@ class CloudDocumentHandler {
         if (!FileUtils.exists("construction.builder")) FileUtils.writeObject(File("construction.builder"), CloudConstructionContent())
         this.cloudConstructionBase = cloudConstructionBase
 
-        if (cloudContentDocument.isEmpty()) {
+        if (cloudContentDocument.catcher().get("cloud.server.port") == null) {
             CloudAPI.instance.getCloudConsole().write("initialize the cloud according to the default values...")
             cloudContentDocument.setDefault("cloud.language", "en")
             cloudContentDocument.setDefault("cloud.server.host", "127.0.0.1")

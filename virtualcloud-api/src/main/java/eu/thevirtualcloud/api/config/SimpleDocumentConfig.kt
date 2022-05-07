@@ -38,14 +38,14 @@ import java.io.File
  *
  */
 
-abstract class SimpleDocumentConfig(private val name: String, private val path: String): IDocument {
+abstract class SimpleDocumentConfig(private val name: String, path: String): IDocument {
 
     companion object {
         private val GSON = GsonBuilder().setPrettyPrinting().create()
     }
 
     private val remotePathDir = File(path.replace("/", "//"))
-    private val remoteFile = File("$path//$name.json")
+    private val remoteFile = if (path != "") File("$path//$name.json") else File("$name.json")
 
     private val dataCatcher: JsonObject = JsonObject()
 
@@ -120,5 +120,13 @@ abstract class SimpleDocumentConfig(private val name: String, private val path: 
 
     override fun isEmpty(): Boolean {
         return this.dataCatcher.size() == 0
+    }
+
+    override fun getFile(): File {
+        return this.remoteFile
+    }
+
+    override fun catcher(): JsonObject {
+        return this.dataCatcher
     }
 }

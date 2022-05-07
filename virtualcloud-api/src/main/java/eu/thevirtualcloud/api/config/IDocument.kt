@@ -25,7 +25,7 @@
 package eu.thevirtualcloud.api.config
 
 import com.google.gson.JsonObject
-import eu.thevirtualcloud.api.utilities.FileUtils
+import java.io.File
 
 /**
  *
@@ -59,5 +59,9 @@ interface IDocument {
     fun getBool(property: String): Boolean
 
     fun isEmpty(): Boolean
+
+    fun catcher(): JsonObject
+
+    fun getFile(): File
 
 }

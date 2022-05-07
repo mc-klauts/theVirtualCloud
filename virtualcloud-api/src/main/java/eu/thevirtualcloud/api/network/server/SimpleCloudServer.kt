@@ -39,6 +39,7 @@ import io.netty.channel.epoll.EpollEventLoopGroup
 import io.netty.channel.epoll.EpollServerSocketChannel
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioServerSocketChannel
+import io.netty.util.internal.PlatformDependent
 
 /**
  *
@@ -109,13 +110,23 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
             throw AlreadyRunningException()
         when(CloudAPI.instance.getCloudChannelManager().isUsingEpoll()) {
             true -> {
-                if (this.threads == -1)
-                    this.workerGroup = EpollEventLoopGroup() else
+                if (PlatformDependent.hasUnsafe()) {
+                    if (this.threads == -1)
+                        this.workerGroup = EpollEventLoopGroup() else
                         this.workerGroup = EpollEventLoopGroup(this.threads)
-                this.remoteBootstrap = ServerBootstrap()
-                    .group(workerGroup)
-                    .channel(EpollServerSocketChannel::class.java)
-                    .childHandler(SimpleNetworkHandler())
+                    this.remoteBootstrap = ServerBootstrap()
+                        .group(workerGroup)
+                        .channel(EpollServerSocketChannel::class.java)
+                        .childHandler(SimpleNetworkHandler())
+                } else {
+                    if (this.threads == -1)
+                        this.workerGroup = NioEventLoopGroup() else
+                        this.workerGroup = NioEventLoopGroup(this.threads)
+                    this.remoteBootstrap = ServerBootstrap()
+                        .group(workerGroup)
+                        .channel(NioServerSocketChannel::class.java)
+                        .childHandler(SimpleNetworkHandler())
+                }
             }
             false -> {
                 if (this.threads == -1)

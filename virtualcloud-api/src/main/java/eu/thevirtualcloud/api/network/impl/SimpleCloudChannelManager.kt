@@ -28,6 +28,10 @@ import eu.thevirtualcloud.api.network.IChannel
 import eu.thevirtualcloud.api.network.IChannelFactory
 import eu.thevirtualcloud.api.network.ICloudChannelManager
 import io.netty.channel.epoll.Epoll
+import io.netty.handler.ssl.ApplicationProtocolConfig.DISABLED
+import io.netty.util.ResourceLeakDetector
+import java.util.logging.Level.OFF
+import java.util.logging.Logger
 
 /**
  *
@@ -42,6 +46,10 @@ class SimpleCloudChannelManager: ICloudChannelManager {
 
     private val usingEpoll: Boolean = Epoll.isAvailable()
     private val channelFactory: IChannelFactory = SimpleChannelFactory()
+
+    init {
+        Logger.getLogger("io.netty").level = OFF;
+    }
 
     private lateinit var cloudChannel: IChannel
 
