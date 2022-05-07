@@ -22,30 +22,25 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.master.content
+package eu.thevirtualcloud.master.listeners;
 
-import eu.thevirtualcloud.api.CloudAPI
-import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
-import eu.thevirtualcloud.api.network.IChannel
-import eu.thevirtualcloud.master.CloudLauncher
+import eu.thevirtualcloud.api.CloudAPI;
+import eu.thevirtualcloud.master.CloudLauncher;
+import eu.thevirtualcloud.master.events.CloudShutdownEvent;
 
 /**
- *
  * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
- *
  */
 
-class CloudNetworkHandler {
+public class CloudShutdownListener {
 
-    private val channel: IChannel = CloudAPI.instance.getCloudChannelManager().getCloudChannelFactory().getChannelServer(CloudLauncher.instance.getCloudDocumentHandler().cloudContentDocument.getString("cloud.server.port")!!.toInt())
-
-    init {
-        CloudAPI.instance.getCloudConsole().write("Try to " + ConsoleColorPane.ANSI_BRIGHT_YELLOW + "start " + ConsoleColorPane.ANSI_RESET + "Cloud server...")
-        channel.insertChannel().open()
-        CloudAPI.instance.getCloudConsole().write("")
+    public CloudShutdownListener() {
+        CloudLauncher.getInstance().getCloudRemoteEventRegistry().subscribe(CloudShutdownEvent.class, event -> {
+            CloudAPI.getInstance().getCloudConsole().write("Close the Cloud server...");
+            CloudAPI.getInstance().getCloudChannelManager().getCloudChannel().close();
+        });
     }
-
 }

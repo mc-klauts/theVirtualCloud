@@ -74,6 +74,7 @@ class FileUtils {
                     dest.mkdir()
                 }
                 val files = src.list()
+                @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
                 for (file in files) {
                     val srcFile = File(src, file)
                     val destFile = File(dest, file)
@@ -108,7 +109,7 @@ class FileUtils {
         @SneakyThrows
         fun read(file: File): String {
             if (!file.exists()) {
-                val path: String = StringUtils.removeEnd(file.absolutePath, "\\" + file.name)
+                val path: String = StringUtils.removeEnd(file.absolutePath, "//" + file.name)
                 val dir = File(path)
                 if (!dir.exists()) {
                     dir.mkdirs()
@@ -212,7 +213,7 @@ class FileUtils {
         }
 
         fun insert(str: String): File? {
-            return File(str.replace("//", "\\").replace("/", "\\"))
+            return File(str.replace("\\", "//").replace("/", "//"))
         }
 
         fun exists(path: String?): Boolean {

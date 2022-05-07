@@ -26,7 +26,7 @@ package eu.thevirtualcloud.master.commands
 
 import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.commands.ICloudCommand
-import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
+import eu.thevirtualcloud.master.CloudLauncher
 
 /**
  *
@@ -42,6 +42,19 @@ class CloudDatabaseCommand: ICloudCommand {
     override fun onHandle(arguments: Array<String>) {
         if (arguments.size != 4) {
             CloudAPI.instance.getCloudConsole().write(CloudAPI.instance.getCloudCommandHandler().help("database")+ " " + CloudAPI.instance.getCloudCommandHandler().args("user", "password", "database"))
+        } else {
+            val user = arguments[1]
+            val password = arguments[2]
+            val database = arguments[3]
+            if (CloudLauncher.instance.getCloudDocumentHandler().cloudDatabaseDocument.isEmpty()) {
+                CloudLauncher.instance.getCloudDocumentHandler().cloudDatabaseDocument.setDefault("host", "localhost")
+            }
+            CloudLauncher.instance.getCloudDocumentHandler().cloudDatabaseDocument.setDefault("user", user)
+            CloudLauncher.instance.getCloudDocumentHandler().cloudDatabaseDocument.setDefault("password", password)
+            CloudLauncher.instance.getCloudDocumentHandler().cloudDatabaseDocument.setDefault("database", database)
+            CloudLauncher.instance.getCloudDocumentHandler().cloudDatabaseDocument.updateConfiguration()
+            CloudLauncher.instance.getCloudDocumentHandler().cloudDatabaseDocument.loadCached()
+            CloudAPI.instance.getCloudConsole().write("The database has been set")
         }
     }
 

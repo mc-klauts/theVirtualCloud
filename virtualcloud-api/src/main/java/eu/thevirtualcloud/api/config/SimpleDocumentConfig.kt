@@ -44,8 +44,8 @@ abstract class SimpleDocumentConfig(private val name: String, private val path: 
         private val GSON = GsonBuilder().setPrettyPrinting().create()
     }
 
-    private val remotePathDir = File(path.replace("/", "\\"))
-    private val remoteFile = File(remotePathDir.path + name + ".json")
+    private val remotePathDir = File(path.replace("/", "//"))
+    private val remoteFile = File("$path//$name.json")
 
     private val dataCatcher: JsonObject = JsonObject()
 

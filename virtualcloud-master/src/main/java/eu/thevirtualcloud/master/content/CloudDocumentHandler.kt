@@ -45,6 +45,7 @@ import java.io.File
 class CloudDocumentHandler {
 
     val cloudContentDocument: IDocument = CloudAPI.instance.getCloudConfigFactory().getCloudConfiguration("CloudContent", "")
+    val cloudDatabaseDocument: IDocument = CloudAPI.instance.getCloudConfigFactory().getCloudConfiguration("database", "storage")
     var cloudConstructionBase: CloudConstructionContent
 
     init {
@@ -69,6 +70,11 @@ class CloudDocumentHandler {
             cloudContentDocument.loadCached()
         } else {
             cloudContentDocument.loadCached()
+        }
+        if (this.cloudDatabaseDocument.isEmpty()) {
+            CloudAPI.instance.getCloudConsole().write(ConsoleColorPane.ANSI_BRIGHT_RED + "Unable to locate database information")
+        } else {
+            CloudAPI.instance.getCloudConsole().write("The cloud has been connected to the database")
         }
 
     }

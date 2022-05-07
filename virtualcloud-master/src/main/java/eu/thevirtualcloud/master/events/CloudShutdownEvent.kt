@@ -36,7 +36,4 @@ import eu.thevirtualcloud.api.event.CloudEvent
  */
 
 class CloudShutdownEvent: CloudEvent {
-
-
-
 }
