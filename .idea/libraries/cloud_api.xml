@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="cloud-api">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Desktop/cloud/cloud-api.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

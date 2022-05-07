@@ -55,14 +55,16 @@ class CloudLauncher {
         this.cloudApi.getCloudConsole().insert()
     }
 
+    private val cloudDocumentHandler: CloudDocumentHandler = CloudDocumentHandler()
+
     private val dependencyLoader: IDependencyLoader = SimpleDependencyLoader()
     private val cloudEventRegistry: ICloudEventRegistry = ICloudEventRegistry.insert()
     private val cloudBuilder: IConstructionLoader = ConstructionLoader()
 
-    private val cloudDocumentHandler: CloudDocumentHandler = CloudDocumentHandler()
-
     init {
+
         dependencyLoader.load()
+
     }
 
     fun getCloudApi(): CloudAPI = this.cloudApi

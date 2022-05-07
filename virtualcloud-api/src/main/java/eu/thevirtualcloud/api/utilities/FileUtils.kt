@@ -121,7 +121,11 @@ class FileUtils {
      
      """.trimIndent()
             scanner.close()
-            return StringUtils.removeEnd(b, "\n")
+            return try {
+                StringUtils.removeEnd(b, "\n")
+            } catch (exception: StringIndexOutOfBoundsException) {
+                b
+            }
         }
 
         @Throws(IOException::class)

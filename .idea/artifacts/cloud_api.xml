@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="cloud-api">
+    <output-path>$USER_HOME$/Desktop/cloud</output-path>
+    <root id="archive" name="cloud-api.jar">
+      <element id="module-output" name="virtualcloud-api" />
+      <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.9.0" />
+      <element id="library" level="project" name="Maven: commons-io:commons-io:2.6" />
+      <element id="library" level="project" name="Maven: io.netty:netty-all:5.0.0.Alpha2" />
+      <element id="library" level="project" name="Maven: org.fusesource.jansi:jansi:2.4.0" />
+      <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10" />
+      <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.10" />
+      <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10" />
+      <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.5.10" />
+      <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-test:1.5.10" />
+      <element id="library" level="project" name="Maven: org.jetbrains:annotations:13.0" />
+      <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.24" />
+    </root>
+  </artifact>
+</component>

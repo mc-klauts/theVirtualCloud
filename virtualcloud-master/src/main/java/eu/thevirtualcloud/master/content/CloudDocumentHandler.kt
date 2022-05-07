@@ -42,6 +42,9 @@ import java.io.File
 
 class CloudDocumentHandler {
 
+    val cloudConstructionBase: CloudConstructionContent = FileUtils.readObject(File("construction.builder"), CloudConstructionContent::class.java)
+    val cloudContentDocument: IDocument = CloudAPI.instance.getCloudConfigFactory().getCloudConfiguration("CloudContent", "")
+
     init {
         val content = CloudLauncher.instance.getCloudDocumentHandler().cloudConstructionBase
         CloudLauncher.instance.getCloudBuilder().load(
@@ -53,8 +56,5 @@ class CloudDocumentHandler {
 
         if (!FileUtils.exists("construction.builder")) FileUtils.writeObject(File("construction.builder"), CloudConstructionContent())
     }
-
-    val cloudConstructionBase: CloudConstructionContent = FileUtils.readObject(File("construction.builder"), CloudConstructionContent::class.java)
-    val cloudContentDocument: IDocument = CloudAPI.instance.getCloudConfigFactory().getCloudConfiguration("CloudContent", "")
 
 }
