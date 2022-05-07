@@ -24,6 +24,8 @@
 
 package eu.thevirtualcloud.api.commands
 
+import java.util.Scanner
+
 /**
  *
  * this doc was created on 05.05.2022
@@ -42,5 +44,17 @@ interface ICloudCommandHandler {
     fun dispatchCommand(command: String): ICloudCommandHandler
 
     fun listen(listen: Boolean)
+
+    fun isListen(): Boolean
+
+    fun scanner(): Scanner
+
+    fun description(command: String): String
+
+    fun help(command: String): String
+
+    fun commands(): Collection<String>
+
+    fun args(vararg args: String): String
 
 }

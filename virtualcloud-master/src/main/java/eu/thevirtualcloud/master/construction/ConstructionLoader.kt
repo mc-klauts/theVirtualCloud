@@ -39,7 +39,7 @@ class ConstructionLoader: IConstructionLoader {
 
     override fun load(vararg string: String) {
         for (dir in string) {
-            val dirFile = File(dir.replace("/", "\\"))
+            val dirFile = File(dir)
             if (!dirFile.exists()) {
                 dirFile.mkdirs()
             }
@@ -47,7 +47,7 @@ class ConstructionLoader: IConstructionLoader {
     }
 
     override fun load(string: String) {
-        val dirFile = File(string.replace("/", "\\"))
+        val dirFile = File(string)
         if (!dirFile.exists()) {
             dirFile.mkdirs()
         }

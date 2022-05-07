@@ -22,21 +22,21 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.commands
+package eu.thevirtualcloud.master.events
+
+import eu.thevirtualcloud.api.event.CloudEvent
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudCommand {
+class CloudShutdownEvent: CloudEvent {
 
-    fun onHandle(arguments: Array<String>)
 
-    fun description() : String
 
 }

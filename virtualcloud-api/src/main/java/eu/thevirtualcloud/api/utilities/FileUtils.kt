@@ -22,6 +22,8 @@
  * SOFTWARE.
  */
 
+@file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
 package eu.thevirtualcloud.api.utilities
 
 import com.google.gson.GsonBuilder
@@ -53,8 +55,7 @@ class FileUtils {
         @SneakyThrows
         fun write(file: File, str: String?) {
             if (!file.exists()) {
-                val path: String = StringUtils.removeEnd(file.absolutePath, "\\" + file.name)
-                val dir = File(path)
+                val dir = File(file.absolutePath.substring(0, file.absolutePath.lastIndexOf(".")))
                 if (!dir.exists()) {
                     dir.mkdirs()
                 }
@@ -221,8 +222,7 @@ class FileUtils {
         @SneakyThrows
         fun tryCreate(file: File) {
             if (!file.exists()) {
-                val path: String = StringUtils.removeEnd(file.path, "\\" + file.name)
-                val dir = File(path)
+                val dir = File(file.absolutePath.substring(0, file.absolutePath.lastIndexOf(".")))
                 if (!dir.exists()) {
                     dir.mkdirs()
                 }

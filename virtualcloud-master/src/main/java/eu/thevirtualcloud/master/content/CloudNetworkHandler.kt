@@ -22,21 +22,24 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.commands
+package eu.thevirtualcloud.master.content
+
+import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudCommand {
+class CloudNetworkHandler {
 
-    fun onHandle(arguments: Array<String>)
-
-    fun description() : String
+    init {
+        CloudAPI.instance.getCloudConsole().write("Try to " + ConsoleColorPane.ANSI_BRIGHT_YELLOW + "start " + ConsoleColorPane.ANSI_RESET + "Cloud server...")
+    }
 
 }

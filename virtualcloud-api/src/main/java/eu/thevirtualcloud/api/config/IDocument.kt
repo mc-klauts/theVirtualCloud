@@ -58,4 +58,6 @@ interface IDocument {
 
     fun getBool(property: String): Boolean
 
+    fun isEmpty(): Boolean
+
 }

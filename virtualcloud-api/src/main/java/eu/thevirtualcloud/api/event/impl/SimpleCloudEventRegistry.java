@@ -82,7 +82,7 @@ public class SimpleCloudEventRegistry implements ICloudEventRegistry {
     @Override
     public Collection<EventHandler<?>> handlers(Class<? extends CloudEvent> type) {
         if (!this.handlers.containsKey(type))
-            throw new EmptyInterfaceException();
+            return Collections.emptyList();
         return this.handlers.get(type);
     }
 

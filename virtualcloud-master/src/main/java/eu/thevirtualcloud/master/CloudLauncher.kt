@@ -25,12 +25,15 @@
 package eu.thevirtualcloud.master
 
 import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
 import eu.thevirtualcloud.api.event.ICloudEventRegistry
 import eu.thevirtualcloud.master.construction.ConstructionLoader
 import eu.thevirtualcloud.master.construction.IConstructionLoader
 import eu.thevirtualcloud.master.content.CloudDocumentHandler
+import eu.thevirtualcloud.master.content.CloudNetworkHandler
 import eu.thevirtualcloud.master.dependencies.IDependencyLoader
 import eu.thevirtualcloud.master.dependencies.SimpleDependencyLoader
+import eu.thevirtualcloud.master.layout.ConsoleBaseLoader
 
 /**
  *
@@ -55,15 +58,18 @@ class CloudLauncher {
         this.cloudApi.getCloudConsole().insert()
     }
 
+    private val cloudBuilder: IConstructionLoader = ConstructionLoader()
     private val cloudDocumentHandler: CloudDocumentHandler = CloudDocumentHandler()
-
     private val dependencyLoader: IDependencyLoader = SimpleDependencyLoader()
     private val cloudEventRegistry: ICloudEventRegistry = ICloudEventRegistry.insert()
-    private val cloudBuilder: IConstructionLoader = ConstructionLoader()
 
     init {
 
+        CloudAPI.instance.getCloudConsole().write("The master application is attempted to load...")
         dependencyLoader.load()
+        CloudNetworkHandler()
+        CloudAPI.instance.getCloudConsole().write("The cloud has been " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "successfully " + ConsoleColorPane.ANSI_RESET +  "loaded")
+        ConsoleBaseLoader()
 
     }
 

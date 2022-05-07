@@ -22,21 +22,32 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.commands
+package eu.thevirtualcloud.master.layout
+
+import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
+import eu.thevirtualcloud.master.commands.CloudDatabaseCommand
+import eu.thevirtualcloud.master.commands.CloudHelpCommand
+import eu.thevirtualcloud.master.commands.CloudStopCommand
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudCommand {
+class ConsoleBaseLoader {
 
-    fun onHandle(arguments: Array<String>)
-
-    fun description() : String
+    init {
+        CloudAPI.instance.getCloudCommandHandler().registerCommand("stop", CloudStopCommand())
+        CloudAPI.instance.getCloudCommandHandler().registerCommand("help", CloudHelpCommand())
+        CloudAPI.instance.getCloudCommandHandler().registerCommand("database", CloudDatabaseCommand())
+        CloudAPI.instance.getCloudConsole().write("the registry loaded" + ConsoleColorPane.ANSI_BRIGHT_GREEN + " " + CloudAPI.instance.getCloudCommandHandler().commands().size + ConsoleColorPane.ANSI_RESET +" commands")
+        print(CloudAPI.instance.getCloudConsole().profilePrefix())
+        CloudAPI.instance.getCloudCommandHandler().listen(true)
+    }
 
 }

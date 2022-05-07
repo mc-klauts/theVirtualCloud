@@ -22,21 +22,35 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.commands
+package eu.thevirtualcloud.master.commands
+
+import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.commands.ICloudCommand
+import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudCommand {
+class CloudHelpCommand: ICloudCommand {
 
-    fun onHandle(arguments: Array<String>)
+    override fun onHandle(arguments: Array<String>) {
+        CloudAPI.instance.getCloudConsole().write("")
+        CloudAPI.instance.getCloudConsole().write("the registry loaded" + ConsoleColorPane.ANSI_BRIGHT_GREEN + " " + CloudAPI.instance.getCloudCommandHandler().commands().size + ConsoleColorPane.ANSI_RESET +" commands")
+        CloudAPI.instance.getCloudConsole().write("")
+        for (command in CloudAPI.instance.getCloudCommandHandler().commands()) {
+            CloudAPI.instance.getCloudConsole().write(CloudAPI.instance.getCloudCommandHandler().description(command) + " - " + ConsoleColorPane.ANSI_BRIGHT_GREEN + command)
+        }
+        CloudAPI.instance.getCloudConsole().write("")
+    }
 
-    fun description() : String
+    override fun description(): String {
+        return "list of all registered commands"
+    }
 
 }

@@ -22,21 +22,31 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.commands
+package eu.thevirtualcloud.master.commands
+
+import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.commands.ICloudCommand
+import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudCommand {
+class CloudDatabaseCommand: ICloudCommand {
 
-    fun onHandle(arguments: Array<String>)
+    override fun onHandle(arguments: Array<String>) {
+        if (arguments.size != 4) {
+            CloudAPI.instance.getCloudConsole().write(CloudAPI.instance.getCloudCommandHandler().help("database")+ " " + CloudAPI.instance.getCloudCommandHandler().args("user", "password", "database"))
+        }
+    }
 
-    fun description() : String
+    override fun description(): String {
+        return "inserts the database"
+    }
 
 }

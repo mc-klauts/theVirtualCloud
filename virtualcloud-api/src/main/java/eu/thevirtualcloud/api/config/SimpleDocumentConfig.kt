@@ -44,43 +44,60 @@ abstract class SimpleDocumentConfig(private val name: String, private val path: 
         private val GSON = GsonBuilder().setPrettyPrinting().create()
     }
 
-    private val remoteFile = File(path.replace("/", "\\") + "\\" + name + ".json")
     private val remotePathDir = File(path.replace("/", "\\"))
+    private val remoteFile = File(remotePathDir.path + name + ".json")
 
-    private var dataCatcher: JsonObject = JsonObject()
+    private val dataCatcher: JsonObject = JsonObject()
 
     init {
         if (path != "")
-            if (!remoteFile.exists()) remotePathDir.mkdirs()
+            if (!remotePathDir.exists()) remotePathDir.mkdirs()
         if (!remoteFile.exists()) remoteFile.createNewFile()
+        else {
+            try {
+                loadCached()
+            } catch (_: java.lang.NullPointerException) {
+            }
+        }
     }
 
-    override fun updateConfiguration(): IDocument {
+    final override fun updateConfiguration(): IDocument {
         FileUtils.writeObject(this.remoteFile, dataCatcher)
         return this
     }
 
-    override fun loadCached(): IDocument {
-        this.dataCatcher = FileUtils.readObject(this.remoteFile, JsonObject::class.java)
+    final override fun loadCached(): IDocument {
+        val c: Collection<String> = ArrayList<String>(this.dataCatcher.keySet())
+        for (s in c) {
+            this.dataCatcher.remove(s)
+        }
+        val cashed = FileUtils.readObject(this.remoteFile, JsonObject::class.java)
+        for (s in cashed.keySet()) {
+            this.dataCatcher.add(s, cashed.get(s))
+        }
         return this
     }
 
     override fun setDefault(property: String, value: String): IDocument {
+        this.dataCatcher.remove(property)
         this.dataCatcher.addProperty(property, value)
         return this
     }
 
     override fun setDefault(property: String, value: Double): IDocument {
+        this.dataCatcher.remove(property)
         this.dataCatcher.addProperty(property, value)
         return this
     }
 
     override fun setDefault(property: String, value: Int): IDocument {
+        this.dataCatcher.remove(property)
         this.dataCatcher.addProperty(property, value)
         return this
     }
 
     override fun setDefault(property: String, value: Boolean): IDocument {
+        this.dataCatcher.remove(property)
         this.dataCatcher.addProperty(property, value)
         return this
     }
@@ -101,4 +118,7 @@ abstract class SimpleDocumentConfig(private val name: String, private val path: 
         return this.dataCatcher[property].asBoolean
     }
 
+    override fun isEmpty(): Boolean {
+        return this.dataCatcher.size() == 0
+    }
 }

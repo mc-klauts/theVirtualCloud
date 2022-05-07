@@ -22,21 +22,28 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.commands
+package eu.thevirtualcloud.api.console.question
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudCommand {
+interface IQuestSession {
 
-    fun onHandle(arguments: Array<String>)
+    companion object {
 
-    fun description() : String
+        fun ask(question: String, p: Boolean): String {
+            val ask: IQuestSession = SimpleCloudQuestSession()
+            return ask.quest(question, p)
+        }
+
+    }
+
+    fun quest(question: String, p: Boolean): String
 
 }

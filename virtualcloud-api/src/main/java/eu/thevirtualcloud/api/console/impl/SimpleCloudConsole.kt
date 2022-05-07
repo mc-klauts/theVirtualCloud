@@ -27,6 +27,8 @@ package eu.thevirtualcloud.api.console.impl
 import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.console.ICloudConsole
 import eu.thevirtualcloud.api.event.impl.types.CloudInputEvent
+import org.fusesource.jansi.AnsiConsole
+import org.fusesource.jansi.internal.JansiLoader
 import java.io.Console
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -44,10 +46,18 @@ import java.util.*
 
 class SimpleCloudConsole: ICloudConsole {
 
+    init {
+        AnsiConsole.systemUninstall()
+    }
+
     private val dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     private val prefix: String =
         ConsoleColorPane.ANSI_RESET + " " + dateTimeFormatter.format(LocalDateTime.now()) + " | " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "Cloud " + ConsoleColorPane.ANSI_RESET +  "» "
     private val log: List<String> = ArrayList()
+
+    override fun profilePrefix(): String {
+        return ConsoleColorPane.ANSI_RESET + " " + ConsoleColorPane.ANSI_BRIGHT_YELLOW + "virtualcloud  " + ConsoleColorPane.ANSI_RESET +  "» "
+    }
 
     override fun write(message: String): ICloudConsole {
         System.out.format(prefix)
@@ -74,7 +84,8 @@ class SimpleCloudConsole: ICloudConsole {
                 "  ╚═══╝  ╚═╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝ ╚═════╝╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝ \n" +
                 "                                                                                                ")
         write("This cloud was developed by " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "@Generix030 " + ConsoleColorPane.ANSI_RESET + "and " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "@Rxphael" + ConsoleColorPane.ANSI_RESET)
-        write("The cloud runs under version " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "1.0.Alpha" + ConsoleColorPane.ANSI_RESET)
+        write("The cloud runs under version " + ConsoleColorPane.ANSI_BRIGHT_YELLOW + "1.0.Alpha" + ConsoleColorPane.ANSI_RESET)
+        write(" ")
         return this
     }
 

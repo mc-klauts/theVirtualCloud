@@ -26,6 +26,8 @@ package eu.thevirtualcloud.master.content
 
 import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.config.IDocument
+import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
+import eu.thevirtualcloud.api.console.question.IQuestSession
 import eu.thevirtualcloud.api.content.types.CloudConstructionContent
 import eu.thevirtualcloud.api.utilities.FileUtils
 import eu.thevirtualcloud.master.CloudLauncher
@@ -42,19 +44,42 @@ import java.io.File
 
 class CloudDocumentHandler {
 
-    val cloudConstructionBase: CloudConstructionContent = FileUtils.readObject(File("construction.builder"), CloudConstructionContent::class.java)
     val cloudContentDocument: IDocument = CloudAPI.instance.getCloudConfigFactory().getCloudConfiguration("CloudContent", "")
+    var cloudConstructionBase: CloudConstructionContent
 
     init {
-        val content = CloudLauncher.instance.getCloudDocumentHandler().cloudConstructionBase
+        if (!FileUtils.exists("construction.builder")) FileUtils.writeObject(File("construction.builder"), CloudConstructionContent())
+        val cloudConstructionBase: CloudConstructionContent = FileUtils.readObject(File("construction.builder"), CloudConstructionContent::class.java)
         CloudLauncher.instance.getCloudBuilder().load(
-            content.storageFolder,
-            content.dependenciesFolder,
-            content.wrapperFolder,
-            content.versionsFolder,
-            content.languagePathFolder)
+            cloudConstructionBase.dependenciesFolder,
+            cloudConstructionBase.wrapperFolder,
+            cloudConstructionBase.versionsFolder,
+            cloudConstructionBase.languagePathFolder)
 
         if (!FileUtils.exists("construction.builder")) FileUtils.writeObject(File("construction.builder"), CloudConstructionContent())
+        this.cloudConstructionBase = cloudConstructionBase
+
+        if (cloudContentDocument.isEmpty()) {
+            CloudAPI.instance.getCloudConsole().write("initialize the cloud according to the default values...")
+            cloudContentDocument.setDefault("cloud.language", "en")
+            cloudContentDocument.setDefault("cloud.server.host", "127.0.0.1")
+            val remotePort = askPort()
+            cloudContentDocument.setDefault("cloud.server.port", remotePort)
+            cloudContentDocument.updateConfiguration()
+            cloudContentDocument.loadCached()
+        } else {
+            cloudContentDocument.loadCached()
+        }
+
+    }
+
+    private fun askPort(): Int {
+        return try {
+            IQuestSession.ask("On which port should the cloud server be started?", false).toInt()
+        } catch (exception: Exception) {
+            CloudAPI.instance.getCloudConsole().write(ConsoleColorPane.ANSI_BRIGHT_RED + "The input could not be parsed" + ConsoleColorPane.ANSI_RESET)
+            askPort()
+        }
     }
 
 }

@@ -22,21 +22,34 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.commands
+package eu.thevirtualcloud.api.console.question
+
+import eu.thevirtualcloud.api.CloudAPI
+import java.io.Console
+import java.util.Scanner
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudCommand {
+class SimpleCloudQuestSession: IQuestSession {
 
-    fun onHandle(arguments: Array<String>)
+    private val scanner: Scanner = CloudAPI.instance.getCloudCommandHandler().scanner()
 
-    fun description() : String
+    override fun quest(question: String, p: Boolean): String {
+        if (CloudAPI.instance.getCloudCommandHandler().isListen()) CloudAPI.instance.getCloudCommandHandler().listen(false)
+        CloudAPI.instance.getCloudConsole().write(question)
+        if (p)
+            print(CloudAPI.instance.getCloudConsole().profilePrefix())
+        val r = scanner.nextLine()
+        if (r.equals("stop", ignoreCase = true))
+        CloudAPI.instance.getCloudCommandHandler().listen(true)
+        return r
+    }
 
 }

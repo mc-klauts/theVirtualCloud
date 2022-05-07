@@ -2,20 +2,23 @@
   <artifact type="jar" name="cloud-launcher">
     <output-path>$USER_HOME$/Desktop/cloud</output-path>
     <root id="archive" name="cloud-launcher.jar">
-      <element id="library" level="project" name="cloud-api" />
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/virtualcloud-master/src/main/java/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$USER_HOME$/Desktop/cloud/META-INF/MANIFEST.MF" />
       </element>
-      <element id="module-output" name="virtualcloud-api" />
       <element id="module-output" name="virtualcloud-master" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/13.0/annotations-13.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.9.0/gson-2.9.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/fusesource/jansi/jansi/2.4.0/jansi-2.4.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-common/1.5.10/kotlin-stdlib-common-1.5.10.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.5.10/kotlin-stdlib-jdk7-1.5.10.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.5.10/kotlin-stdlib-jdk8-1.5.10.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/io/netty/netty-all/5.0.0.Alpha2/netty-all-5.0.0.Alpha2.jar" path-in-jar="/" />
+      <element id="module-output" name="virtualcloud-api" />
+      <element id="library" level="project" name="cloud-api" />
+      <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.9.0" />
+      <element id="library" level="project" name="Maven: commons-io:commons-io:2.6" />
+      <element id="library" level="project" name="Maven: io.netty:netty-all:5.0.0.Alpha2" />
+      <element id="library" level="project" name="Maven: org.fusesource.jansi:jansi:2.4.0" />
+      <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.5.10" />
+      <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.10" />
+      <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.10" />
+      <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.5.10" />
+      <element id="library" level="project" name="Maven: org.jetbrains.kotlin:kotlin-test:1.5.10" />
+      <element id="library" level="project" name="Maven: org.jetbrains:annotations:13.0" />
+      <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.24" />
     </root>
   </artifact>
 </component>

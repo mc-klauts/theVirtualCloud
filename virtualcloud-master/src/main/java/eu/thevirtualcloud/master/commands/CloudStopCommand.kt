@@ -22,21 +22,33 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.commands
+package eu.thevirtualcloud.master.commands
+
+import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.commands.ICloudCommand
+import eu.thevirtualcloud.api.commands.ICloudCommandHandler
+import eu.thevirtualcloud.master.events.CloudShutdownEvent
+import kotlin.system.exitProcess
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudCommand {
+class CloudStopCommand: ICloudCommand {
 
-    fun onHandle(arguments: Array<String>)
+    override fun onHandle(arguments: Array<String>) {
+        CloudAPI.instance.getCloudConsole().write("try to shutdown the cloud")
+        CloudAPI.instance.getCloudEventManager().callEvent(CloudShutdownEvent())
+        exitProcess(-1)
+    }
 
-    fun description() : String
+    override fun description(): String {
+        return "shuts down the server"
+    }
 
 }

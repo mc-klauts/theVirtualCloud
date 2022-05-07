@@ -37,6 +37,8 @@ import java.io.Console
 
 interface ICloudConsole {
 
+    fun profilePrefix(): String
+
     fun write(message: String): ICloudConsole
 
     fun console(): Console

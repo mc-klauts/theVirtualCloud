@@ -30,6 +30,7 @@ import eu.thevirtualcloud.api.commands.ICloudCommandHandler
 import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
 import eu.thevirtualcloud.api.event.impl.types.CloudCommandEvent
 import eu.thevirtualcloud.api.event.impl.types.CloudInputEvent
+import eu.thevirtualcloud.api.exceptions.EmptyInterfaceException
 import java.lang.String.join
 import java.util.*
 
@@ -70,7 +71,6 @@ class SimpleCommandHandler: ICloudCommandHandler {
         when (listen) {
             true -> {
                 this.listen = true
-                @Suppress("KotlinConstantConditions")
                 if (this.listen) {
                     commandThread.schedule(object : TimerTask() {
                         override fun run() {
@@ -81,24 +81,58 @@ class SimpleCommandHandler: ICloudCommandHandler {
                                     if (line[0].equals(key, ignoreCase = true)) {
                                         CloudAPI.instance.getCloudEventManager().callEvent(CloudCommandEvent(line.toTypedArray()))
                                         registry[key]!!.onHandle(line.toTypedArray())
-                                        System.out.format(CloudAPI.instance.getCloudConsole().prefix())
+                                        print(CloudAPI.instance.getCloudConsole().profilePrefix())
                                         return
                                     }
                                 }
 
                                 CloudAPI.instance.getCloudConsole().write(ConsoleColorPane.ANSI_BRIGHT_RED + "This command couldn't found")
-                                System.out.format(CloudAPI.instance.getCloudConsole().prefix())
-
+                                print(CloudAPI.instance.getCloudConsole().profilePrefix())
                             }
                         }
                     }, 100, 100)
                 }
             }
             false -> {
+                try {
+                    this.commandThread.cancel()
+                } catch (_: Exception) {
+                }
                 this.listen = false
-                this.commandThread.cancel()
             }
         }
+    }
+
+
+
+    override fun isListen(): Boolean {
+        return this.listen
+    }
+
+    override fun scanner(): Scanner {
+        return this.remoteReader
+    }
+
+    override fun description(command: String): String {
+        return this.registry[command]!!.description()
+    }
+
+    override fun help(command: String): String {
+        if (this.registry.containsKey(command))
+            return CloudAPI.instance.getCloudCommandHandler().description(command) + " - " + ConsoleColorPane.ANSI_BRIGHT_GREEN + command
+        else throw EmptyInterfaceException()
+    }
+
+    override fun commands(): Collection<String> {
+        return this.registry.keys
+    }
+
+    override fun args(vararg args: String): String {
+        var build = ConsoleColorPane.ANSI_RESET + "(" + ConsoleColorPane.ANSI_BRIGHT_GREEN
+        for (arg in args) {
+            build = build.plus(ConsoleColorPane.ANSI_BRIGHT_GREEN + arg + ConsoleColorPane.ANSI_RESET + ", ")
+        }
+        return build.substring(0, build.lastIndexOf(",")).plus(")")
     }
 
 
