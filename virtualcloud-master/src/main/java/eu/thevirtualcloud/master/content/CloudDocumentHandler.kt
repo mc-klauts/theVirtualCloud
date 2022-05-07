@@ -22,24 +22,39 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.content.types
+package eu.thevirtualcloud.master.content
+
+import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.config.IDocument
+import eu.thevirtualcloud.api.content.types.CloudConstructionContent
+import eu.thevirtualcloud.api.utilities.FileUtils
+import eu.thevirtualcloud.master.CloudLauncher
+import java.io.File
 
 /**
  *
- * this doc was created on 06.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-@Suppress("MemberVisibilityCanBePrivate")
-class CloudConstructionContent {
+class CloudDocumentHandler {
 
-    val languagePathFolder: String = "language"
-    val dependenciesFolder: String = "dependencies"
-    val storageFolder: String = "storage"
-    val versionsFolder: String = "$storageFolder/versionsJars"
-    val wrapperFolder: String = "$storageFolder/wrappers"
+    init {
+        val content = CloudLauncher.instance.getCloudDocumentHandler().cloudConstructionBase
+        CloudLauncher.instance.getCloudBuilder().load(
+            content.storageFolder,
+            content.dependenciesFolder,
+            content.wrapperFolder,
+            content.versionsFolder,
+            content.languagePathFolder)
+
+        if (!FileUtils.exists("construction.builder")) FileUtils.writeObject(File("construction.builder"), CloudConstructionContent())
+    }
+
+    val cloudConstructionBase: CloudConstructionContent = FileUtils.readObject(File("construction.builder"), CloudConstructionContent::class.java)
+    val cloudContentDocument: IDocument = CloudAPI.instance.getCloudConfigFactory().getCloudConfiguration("CloudContent", "")
 
 }

@@ -22,24 +22,46 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.content.types
+package eu.thevirtualcloud.api.config.impl
+
+import eu.thevirtualcloud.api.config.IConfigurationFactory
+import eu.thevirtualcloud.api.config.IDocument
 
 /**
  *
- * this doc was created on 06.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-@Suppress("MemberVisibilityCanBePrivate")
-class CloudConstructionContent {
+class SimpleConfigurationFactory: IConfigurationFactory {
 
-    val languagePathFolder: String = "language"
-    val dependenciesFolder: String = "dependencies"
-    val storageFolder: String = "storage"
-    val versionsFolder: String = "$storageFolder/versionsJars"
-    val wrapperFolder: String = "$storageFolder/wrappers"
+    private val docs = ArrayList<IDocument>()
+
+    override fun updateConfiguration(): IConfigurationFactory {
+        for (document in getRegisteredDocuments()) {
+            document.updateConfiguration()
+        }
+        return this
+    }
+
+    override fun loadCached(): IConfigurationFactory {
+        for (document in getRegisteredDocuments()) {
+            document.loadCached()
+        }
+        return this
+    }
+
+    override fun getCloudConfiguration(name: String, path: String): IDocument {
+        val doc = SimpleCloudDocument(name, path)
+        this.docs.add(doc)
+        return doc
+    }
+
+    override fun getRegisteredDocuments(): Collection<IDocument> {
+        return this.docs
+    }
 
 }

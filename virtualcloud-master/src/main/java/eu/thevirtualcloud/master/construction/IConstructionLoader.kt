@@ -22,24 +22,21 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.content.types
+package eu.thevirtualcloud.master.construction
 
 /**
  *
- * this doc was created on 06.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-@Suppress("MemberVisibilityCanBePrivate")
-class CloudConstructionContent {
+interface IConstructionLoader {
 
-    val languagePathFolder: String = "language"
-    val dependenciesFolder: String = "dependencies"
-    val storageFolder: String = "storage"
-    val versionsFolder: String = "$storageFolder/versionsJars"
-    val wrapperFolder: String = "$storageFolder/wrappers"
+    fun load(vararg string: String)
+
+    fun load(string: String)
 
 }

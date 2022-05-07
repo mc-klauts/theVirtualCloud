@@ -27,6 +27,7 @@ package eu.thevirtualcloud.api.event.impl;
 import eu.thevirtualcloud.api.event.CloudEvent;
 import eu.thevirtualcloud.api.event.EventHandler;
 import eu.thevirtualcloud.api.event.ICloudEventRegistry;
+import eu.thevirtualcloud.api.event.impl.types.CloudAPIBootEvent;
 import eu.thevirtualcloud.api.exceptions.EmptyInterfaceException;
 import org.jetbrains.annotations.NotNull;
 

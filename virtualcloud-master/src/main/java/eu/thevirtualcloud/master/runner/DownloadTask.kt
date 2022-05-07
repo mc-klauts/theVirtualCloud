@@ -22,24 +22,24 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.content.types
+package eu.thevirtualcloud.master.runner
+
+import eu.thevirtualcloud.api.utilities.FileUtils
+import java.io.File
 
 /**
  *
- * this doc was created on 06.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-@Suppress("MemberVisibilityCanBePrivate")
-class CloudConstructionContent {
+class DownloadTask: IDownloadTask {
 
-    val languagePathFolder: String = "language"
-    val dependenciesFolder: String = "dependencies"
-    val storageFolder: String = "storage"
-    val versionsFolder: String = "$storageFolder/versionsJars"
-    val wrapperFolder: String = "$storageFolder/wrappers"
+    override fun download(urlStr: String, file: File)  {
+        FileUtils.download(urlStr, file)
+    }
 
 }

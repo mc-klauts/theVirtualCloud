@@ -17,11 +17,8 @@ abstract class PacketRegistry {
         private var registry: PacketRegistry = SimplePacketRegistry()
 
         fun<T: PacketRegistry> getPacketRegistry(): T {
+            @Suppress("UNCHECKED_CAST")
             return this.registry as T
-        }
-
-        fun<T: PacketRegistry> setPacketRegistry(registry: T) {
-            this.registry = registry
         }
 
     }

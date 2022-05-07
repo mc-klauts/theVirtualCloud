@@ -22,24 +22,40 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.content.types
+package eu.thevirtualcloud.api.config
+
+import com.google.gson.JsonObject
+import eu.thevirtualcloud.api.utilities.FileUtils
 
 /**
  *
- * this doc was created on 06.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-@Suppress("MemberVisibilityCanBePrivate")
-class CloudConstructionContent {
+interface IDocument {
 
-    val languagePathFolder: String = "language"
-    val dependenciesFolder: String = "dependencies"
-    val storageFolder: String = "storage"
-    val versionsFolder: String = "$storageFolder/versionsJars"
-    val wrapperFolder: String = "$storageFolder/wrappers"
+    fun updateConfiguration(): IDocument
+
+    fun loadCached(): IDocument
+
+    fun setDefault(property: String, value: String): IDocument
+
+    fun setDefault(property: String, value: Double): IDocument
+
+    fun setDefault(property: String, value: Int): IDocument
+
+    fun setDefault(property: String, value: Boolean): IDocument
+
+    fun getString(property: String): String?
+
+    fun getInt(property: String): Int
+
+    fun getDouble(property: String): Double
+
+    fun getBool(property: String): Boolean
 
 }

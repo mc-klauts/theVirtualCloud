@@ -6,11 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="virtualcloud-master" />
         <module name="virtualcloud-api" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="virtualcloud-api" target="16" />
+      <module name="virtualcloud-master" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>
