@@ -24,6 +24,9 @@
 
 package eu.thevirtualcloud.api.network
 
+import eu.thevirtualcloud.api.network.handler.ICloudHandler
+import eu.thevirtualcloud.api.network.protocol.Packet
+
 /**
  *
  * this doc was created on 05.05.2022
@@ -51,5 +54,13 @@ interface IChannel {
     fun maxThreads(index: Int): IChannel
 
     fun close(): IChannel
+
+    fun hasHandler(): Boolean
+
+    fun handler(): ICloudHandler
+
+    fun dispatchPacket(packet: Packet<*>): IChannel
+
+    fun handler(handler: ICloudHandler): IChannel
 
 }
