@@ -32,8 +32,12 @@ java -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:CompileThreshold=100 -XX:+UnlockEx
 - **module system** 
 - **default modules**
 - **group system** 
+- **extern dependeny loader** 
 - **template system** 
 - **easy Server management** 
+- **multi wrapper system** 
+- **wrapper producer** 
+- **nosql & MySQL Support** 
 
 
 ## Modules
