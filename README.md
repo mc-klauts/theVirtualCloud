@@ -18,7 +18,7 @@ screen -S VirtualCloud java -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:CompileThre
 If you are using a Windows operating system you need to create a start.bat file and add the following start parameters.
 
 ```
-java -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:CompileThreshold=100 -XX:+UnlockExperimentalVMOptions -XX:+UseCompressedOops -Xmx512m -Xms256m -jar launcher.jar
+java -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:CompileThreshold=100 -XX:+UnlockExperimentalVMOptions -XX:+UseCompressedOops -Xmx512m -Xms256m -jar cloud-master.jar
 ```
 
 ## Introduction
