@@ -27,7 +27,6 @@ package eu.thevirtualcloud.api
 import eu.thevirtualcloud.api.commands.ICloudCommandHandler
 import eu.thevirtualcloud.api.commands.impl.SimpleCommandHandler
 import eu.thevirtualcloud.api.config.IConfigurationFactory
-import eu.thevirtualcloud.api.config.IDocument
 import eu.thevirtualcloud.api.config.impl.SimpleConfigurationFactory
 import eu.thevirtualcloud.api.console.ICloudConsole
 import eu.thevirtualcloud.api.console.impl.SimpleCloudConsole
@@ -38,6 +37,8 @@ import eu.thevirtualcloud.api.event.impl.SimpleCloudEventManager
 import eu.thevirtualcloud.api.event.impl.types.CloudAPIBootEvent
 import eu.thevirtualcloud.api.network.ICloudChannelManager
 import eu.thevirtualcloud.api.network.impl.SimpleCloudChannelManager
+import eu.thevirtualcloud.api.network.impl.SimplePacketRegistry
+import eu.thevirtualcloud.api.network.protocol.PacketRegistry
 
 /**
  *
@@ -56,6 +57,7 @@ class CloudAPI {
     private val cloudCommandHandler: ICloudCommandHandler = SimpleCommandHandler()
     private val cloudContentLoader: IContentLoader = SimpleContentLoader()
     private val cloudConfigFactory: IConfigurationFactory = SimpleConfigurationFactory()
+    private val cloudPacketRegistry: PacketRegistry = SimplePacketRegistry()
 
     companion object {
         @JvmStatic
@@ -68,6 +70,8 @@ class CloudAPI {
     }
 
     fun getCloudContentLoader(): IContentLoader = this.cloudContentLoader
+
+    fun getCloudPacketRegistry(): PacketRegistry = this.cloudPacketRegistry
 
     fun getCloudConfigFactory(): IConfigurationFactory = this.cloudConfigFactory
 

@@ -33,6 +33,7 @@ import eu.thevirtualcloud.master.content.CloudDocumentHandler
 import eu.thevirtualcloud.master.content.CloudNetworkHandler
 import eu.thevirtualcloud.master.dependencies.IDependencyLoader
 import eu.thevirtualcloud.master.dependencies.SimpleDependencyLoader
+import eu.thevirtualcloud.master.handler.PacketMasterHandler
 import eu.thevirtualcloud.master.layout.ConsoleBaseLoader
 import eu.thevirtualcloud.master.runner.key.IKeyGenerator
 import eu.thevirtualcloud.master.runner.key.SimpleKeyGenerator
@@ -71,6 +72,7 @@ class CloudLauncher {
         CloudAPI.instance.getCloudConsole().write("The master application is attempted to load...")
         dependencyLoader.load()
         CloudNetworkHandler()
+        PacketMasterHandler()
         CloudAPI.instance.getCloudConsole().write("The cloud has been " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "successfully " + ConsoleColorPane.ANSI_RESET +  "loaded")
         ConsoleBaseLoader()
 

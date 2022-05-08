@@ -24,6 +24,10 @@
 
 package eu.thevirtualcloud.api.network.impl
 
+import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
+import eu.thevirtualcloud.api.exceptions.network.NotRegisteredRegistryException
+import eu.thevirtualcloud.api.network.protocol.Packet
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
@@ -39,8 +43,36 @@ import io.netty.channel.SimpleChannelInboundHandler
 
 class SimpleNetworkHandler: SimpleChannelInboundHandler<ByteBuf>() {
 
-    override fun channelRead0(p0: ChannelHandlerContext?, p1: ByteBuf?) {
-        TODO("Not yet implemented")
+    override fun channelRead0(p0: ChannelHandlerContext?, buffer: ByteBuf?) {
+        try {
+            if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
+                val packetID = buffer!!.readInt()
+                val dispatchedPacket: Packet<*> = CloudAPI.instance.getCloudPacketRegistry().fromID(packetID, buffer)
+                DispatcherInterface.dispatchPacket(CloudAPI.instance.getCloudChannelManager().getCloudChannel().handler().packetHandlers(dispatchedPacket.javaClass), dispatchedPacket)
+            }
+        } catch (exception: NotRegisteredRegistryException) {
+            CloudAPI.instance.getCloudConsole().write(ConsoleColorPane.ANSI_BRIGHT_RED + exception.message)
+        }
     }
 
+    override fun exceptionCaught(ctx: ChannelHandlerContext?, cause: Throwable?) {
+        super.exceptionCaught(ctx, cause)
+        if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
+            DispatcherInterface.dispatchExceptionHandle(ctx!!.channel(), cause)
+        }
+    }
+
+    override fun channelActive(ctx: ChannelHandlerContext?) {
+        super.channelActive(ctx)
+        if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
+            DispatcherInterface.dispatchInboundHandle(ctx!!.channel())
+        }
+    }
+
+    override fun channelInactive(ctx: ChannelHandlerContext?) {
+        super.channelInactive(ctx)
+        if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
+            DispatcherInterface.dispatchUnregisterHandle(ctx!!.channel())
+        }
+    }
 }

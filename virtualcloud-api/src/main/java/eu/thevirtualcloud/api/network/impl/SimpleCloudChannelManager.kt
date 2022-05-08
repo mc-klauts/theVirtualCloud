@@ -59,7 +59,7 @@ class SimpleCloudChannelManager: ICloudChannelManager {
 
     override fun getCloudChannelFactory(): IChannelFactory = this.channelFactory
 
-    fun setCloudChannel(channel: IChannel) {
+    override fun setCloudChannel(channel: IChannel) {
         this.cloudChannel = channel
     }
 

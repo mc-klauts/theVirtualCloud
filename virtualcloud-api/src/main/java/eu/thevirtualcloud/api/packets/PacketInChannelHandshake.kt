@@ -22,25 +22,23 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.network
+package eu.thevirtualcloud.api.packets
+
+import eu.thevirtualcloud.api.network.protocol.Packet
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 08.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudChannelManager {
+class PacketInChannelHandshake(private val a: String, private val b: String): Packet<PacketInChannelHandshake> {
 
-    fun isUsingEpoll(): Boolean
+    fun a(): String = this.a
 
-    fun getCloudChannel(): IChannel
-
-    fun getCloudChannelFactory(): IChannelFactory
-
-    fun setCloudChannel(channel: IChannel)
+    fun b(): String = this.b
 
 }

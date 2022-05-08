@@ -22,25 +22,21 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.network
+package eu.thevirtualcloud.api.network.handler.impl
+
+import eu.thevirtualcloud.api.network.protocol.Packet
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 08.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudChannelManager {
+interface PacketHandler<T: Packet<*>> {
 
-    fun isUsingEpoll(): Boolean
-
-    fun getCloudChannel(): IChannel
-
-    fun getCloudChannelFactory(): IChannelFactory
-
-    fun setCloudChannel(channel: IChannel)
+    fun handle(packet: Packet<*>)
 
 }

@@ -27,7 +27,10 @@ package eu.thevirtualcloud.master.content
 import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
 import eu.thevirtualcloud.api.network.IChannel
+import eu.thevirtualcloud.api.network.handler.ICloudHandler
+import eu.thevirtualcloud.api.network.handler.impl.ChannelHandler
 import eu.thevirtualcloud.master.CloudLauncher
+import io.netty.channel.Channel
 
 /**
  *
@@ -45,7 +48,12 @@ class CloudNetworkHandler {
     init {
         CloudAPI.instance.getCloudConsole().write("Try to " + ConsoleColorPane.ANSI_BRIGHT_YELLOW + "start " + ConsoleColorPane.ANSI_RESET + "Cloud server...")
         if (CloudLauncher.instance.getCloudDocumentHandler().cloudContentDocument.catcher().get("cloud.server.port") != null) {
-            channel.insertChannel().open()
+            channel.handler(ICloudHandler.getDefaultChannelHandler()).insertChannel()
+            channel.handler().onChannelInbound(object : ChannelHandler {
+                override fun onHandle(connection: Channel) {
+                    CloudAPI.instance.getCloudConsole().write("A new channel has connected")
+                }
+            })
             CloudAPI.instance.getCloudConsole().write("A cloud server has been bound to port " + ConsoleColorPane.ANSI_BRIGHT_GREEN + CloudLauncher.instance.getCloudDocumentHandler().cloudContentDocument.getInt("cloud.server.port") + ConsoleColorPane.ANSI_RESET)
         } else {
             CloudAPI.instance.getCloudConsole().write("an opening of the cloud server was " + ConsoleColorPane.ANSI_BRIGHT_RED + "denied" + ConsoleColorPane.ANSI_RESET)

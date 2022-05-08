@@ -33,6 +33,7 @@ import eu.thevirtualcloud.api.content.types.wrapper.CloudWrapper
 import eu.thevirtualcloud.api.content.types.wrapper.CloudWrapperContent
 import eu.thevirtualcloud.api.utilities.FileUtils
 import eu.thevirtualcloud.master.CloudLauncher
+import java.io.Console
 import java.io.File
 
 /**
@@ -53,6 +54,12 @@ class CloudWrapperCommand: ICloudCommand {
             try {
                 val iKey = CloudLauncher.instance.getCloudKeyGenerator().generatePassword(12)
                 val iName = arguments[1]
+                for (wrapper in CloudLauncher.instance.getCloudDocumentHandler().readWrappers().getWrappers()) {
+                    if (wrapper.name.equals(iName, ignoreCase = true)) {
+                        CloudAPI.instance.getCloudConsole().write(ConsoleColorPane.ANSI_BRIGHT_RED + "This wrapper has already been created")
+                        return
+                    }
+                }
                 val producedWrapper = CloudWrapper(iName, iKey)
                 val wrapperContent = CloudWrapperContent(
                     iName,

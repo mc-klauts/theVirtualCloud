@@ -24,6 +24,7 @@
 
 package eu.thevirtualcloud.api.network.protocol
 
+import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.exceptions.network.NotRegisteredRegistryException
 import io.netty.buffer.ByteBuf
 import java.util.*
@@ -40,10 +41,10 @@ import java.util.*
 interface Packet<T> {
 
     fun toProtocolBuffer(): NetworkBuffer {
-        if (PacketRegistry.getPacketRegistry<PacketRegistry>().contains(this.javaClass)) {
+        if (CloudAPI.instance.getCloudPacketRegistry().contains(this.javaClass)) {
             val buffer = NetworkBuffer()
             val obj = this.javaClass.newInstance()
-            buffer.getRemoteBuffer().writeInt(PacketRegistry.getPacketRegistry<PacketRegistry>().packetTypeID(this.javaClass))
+            buffer.getRemoteBuffer().writeInt(CloudAPI.instance.getCloudPacketRegistry().packetTypeID(this.javaClass))
             for (field in this::class.java.declaredFields) {
                 if (!field.isAccessible) field.isAccessible = true
                 if (!field.isAnnotationPresent(ExceptEntryField::class.java)) {

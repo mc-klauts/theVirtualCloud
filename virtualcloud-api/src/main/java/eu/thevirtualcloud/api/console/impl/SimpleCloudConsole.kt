@@ -51,8 +51,6 @@ class SimpleCloudConsole: ICloudConsole {
     }
 
     private val dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-    private val prefix: String =
-        ConsoleColorPane.ANSI_RESET + " " + dateTimeFormatter.format(LocalDateTime.now()) + " | " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "Cloud " + ConsoleColorPane.ANSI_RESET +  "» "
     private val log: List<String> = ArrayList()
 
     override fun profilePrefix(): String {
@@ -60,7 +58,7 @@ class SimpleCloudConsole: ICloudConsole {
     }
 
     override fun write(message: String): ICloudConsole {
-        System.out.format(prefix)
+        System.out.format(ConsoleColorPane.ANSI_RESET + " " + dateTimeFormatter.format(LocalDateTime.now()) + " | " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "Cloud " + ConsoleColorPane.ANSI_RESET +  "» ")
         println(message)
         return this
     }
@@ -70,7 +68,7 @@ class SimpleCloudConsole: ICloudConsole {
     }
 
     override fun prefix(): String {
-        return this.prefix
+        return ConsoleColorPane.ANSI_RESET + " " + dateTimeFormatter.format(LocalDateTime.now()) + " | " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "Cloud " + ConsoleColorPane.ANSI_RESET +  "» "
     }
 
     override fun insert(): ICloudConsole {

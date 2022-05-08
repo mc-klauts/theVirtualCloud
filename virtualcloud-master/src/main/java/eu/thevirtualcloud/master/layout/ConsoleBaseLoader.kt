@@ -26,6 +26,7 @@ package eu.thevirtualcloud.master.layout
 
 import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
+import eu.thevirtualcloud.master.CloudLauncher
 import eu.thevirtualcloud.master.commands.CloudDatabaseCommand
 import eu.thevirtualcloud.master.commands.CloudHelpCommand
 import eu.thevirtualcloud.master.commands.CloudStopCommand
@@ -48,6 +49,11 @@ class ConsoleBaseLoader {
         CloudAPI.instance.getCloudCommandHandler().registerCommand("database", CloudDatabaseCommand())
         CloudAPI.instance.getCloudCommandHandler().registerCommand("produce", CloudWrapperCommand())
         CloudAPI.instance.getCloudConsole().write("the registry loaded" + ConsoleColorPane.ANSI_BRIGHT_GREEN + " " + CloudAPI.instance.getCloudCommandHandler().commands().size + ConsoleColorPane.ANSI_RESET +" commands")
+
+        for (wrapper in CloudLauncher.instance.getCloudDocumentHandler().readWrappers().getWrappers()) {
+            CloudAPI.instance.getCloudConsole().write("Wait for " + ConsoleColorPane.ANSI_BRIGHT_YELLOW + wrapper.name + ConsoleColorPane.ANSI_RESET)
+        }
+
         print(CloudAPI.instance.getCloudConsole().profilePrefix())
         CloudAPI.instance.getCloudCommandHandler().listen(true)
     }

@@ -31,7 +31,9 @@ import eu.thevirtualcloud.api.exceptions.network.ChannelThreadException
 import eu.thevirtualcloud.api.exceptions.network.ParalyzedChannelException
 import eu.thevirtualcloud.api.network.IChannel
 import eu.thevirtualcloud.api.network.connection.IConnectionComponent
+import eu.thevirtualcloud.api.network.handler.ICloudHandler
 import eu.thevirtualcloud.api.network.impl.SimpleNetworkHandler
+import eu.thevirtualcloud.api.network.protocol.Packet
 import io.netty.bootstrap.Bootstrap
 import io.netty.channel.Channel
 import io.netty.channel.EventLoopGroup
@@ -51,13 +53,14 @@ import io.netty.channel.socket.nio.NioSocketChannel
 
 class SimpleCloudClient(private val connectionManagement: IConnectionComponent?): IChannel {
 
-    lateinit var futureChannel: Channel
+    private lateinit var futureChannel: Channel
     lateinit var remoteBootstrap: Bootstrap
     lateinit var workerGroup: EventLoopGroup
 
     private var open: Boolean = false
     private var wait: Boolean = false
     private var threads: Int = -1
+    private var handler: ICloudHandler? = null
 
     override fun open(): IChannel {
         when (this.wait) {
@@ -105,6 +108,7 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
     }
 
     override fun insertChannel(): IChannel {
+        CloudAPI.instance.getCloudChannelManager().setCloudChannel(this)
         if (open)
             throw AlreadyRunningException()
         when(CloudAPI.instance.getCloudChannelManager().isUsingEpoll()) {
@@ -152,6 +156,27 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
         this.workerGroup.shutdownGracefully()
         this.futureChannel.close()
         return this
+    }
+
+    override fun connection(): Channel {
+        return this.futureChannel
+    }
+
+    override fun handler(handler: ICloudHandler): IChannel {
+        this.handler = handler
+        return this
+    }
+
+    override fun handler(): ICloudHandler {
+        return this.handler!!
+    }
+
+    override fun hasHandler(): Boolean {
+        return this.handler != null
+    }
+
+    override fun dispatchPacket(packet: Packet<*>) {
+        this.futureChannel.writeAndFlush(packet.toProtocolBuffer())
     }
 
 
