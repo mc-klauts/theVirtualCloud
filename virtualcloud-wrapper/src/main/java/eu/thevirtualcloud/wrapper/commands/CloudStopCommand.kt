@@ -22,27 +22,31 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.master.listeners;
+package eu.thevirtualcloud.wrapper.commands
 
-import eu.thevirtualcloud.api.CloudAPI;
-import eu.thevirtualcloud.master.CloudLauncher;
-import eu.thevirtualcloud.master.events.CloudShutdownEvent;
+import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.commands.ICloudCommand
+import eu.thevirtualcloud.wrapper.events.CloudShutdownEvent
+import kotlin.system.exitProcess
 
 /**
+ *
  * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
+ *
  */
 
-public class CloudShutdownListener {
+class CloudStopCommand: ICloudCommand {
 
-    public CloudShutdownListener() {
-        CloudLauncher.getInstance().getCloudRemoteEventRegistry().subscribe(CloudShutdownEvent.class, event -> {
-            CloudAPI.instance.getCloudConsole().write("try to shutdown the cloud");
-            CloudAPI.getInstance().getCloudChannelManager().getCloudChannel().close();
-            CloudAPI.getInstance().getCloudConsole().write("Close the Cloud server...");
-            System.exit(-1);
-        });
+    override fun onHandle(arguments: Array<String>) {
+        CloudAPI.instance.getCloudConsole().write("try to shutdown the cloud")
+        CloudAPI.instance.getCloudEventManager().callEvent(CloudShutdownEvent())
     }
+
+    override fun description(): String {
+        return "shuts down the server"
+    }
+
 }

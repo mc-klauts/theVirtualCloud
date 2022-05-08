@@ -32,7 +32,6 @@ import eu.thevirtualcloud.api.exceptions.network.ParalyzedChannelException
 import eu.thevirtualcloud.api.network.IChannel
 import eu.thevirtualcloud.api.network.connection.IConnectionComponent
 import eu.thevirtualcloud.api.network.handler.ICloudHandler
-import eu.thevirtualcloud.api.network.impl.SimpleNetworkHandler
 import eu.thevirtualcloud.api.network.protocol.Packet
 import io.netty.bootstrap.Bootstrap
 import io.netty.channel.Channel
@@ -41,6 +40,7 @@ import io.netty.channel.epoll.EpollEventLoopGroup
 import io.netty.channel.epoll.EpollSocketChannel
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioSocketChannel
+import io.netty.util.internal.PlatformDependent
 
 /**
  *
@@ -113,13 +113,23 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
             throw AlreadyRunningException()
         when(CloudAPI.instance.getCloudChannelManager().isUsingEpoll()) {
             true -> {
-                if (this.threads == -1)
-                    this.workerGroup = EpollEventLoopGroup() else
+                if (PlatformDependent.hasUnsafe()) {
+                    if (this.threads == -1)
+                        this.workerGroup = EpollEventLoopGroup() else
                         this.workerGroup = EpollEventLoopGroup(this.threads)
-                this.remoteBootstrap = Bootstrap()
-                    .group(workerGroup)
-                    .channel(EpollSocketChannel::class.java)
-                    .handler(SimpleNetworkHandler())
+                    this.remoteBootstrap = Bootstrap()
+                        .group(workerGroup)
+                        .channel(EpollSocketChannel::class.java)
+                        .handler(SimpleClientChannelInit())
+                } else {
+                    if (this.threads == -1)
+                        this.workerGroup = NioEventLoopGroup() else
+                        this.workerGroup = NioEventLoopGroup(this.threads)
+                    this.remoteBootstrap = Bootstrap()
+                        .group(workerGroup)
+                        .channel(NioSocketChannel::class.java)
+                        .handler(SimpleClientChannelInit())
+                }
             }
             false -> {
                 if (this.threads == -1)
@@ -128,7 +138,7 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
                 this.remoteBootstrap = Bootstrap()
                     .group(workerGroup)
                     .channel(NioSocketChannel::class.java)
-                    .handler(SimpleNetworkHandler())
+                    .handler(SimpleClientChannelInit())
             }
         }
         return this
@@ -172,8 +182,12 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
     }
 
     override fun dispatchPacket(packet: Packet<*>): IChannel {
-        this.futureChannel.writeAndFlush(packet.toProtocolBuffer())
+        this.futureChannel.writeAndFlush(packet.toProtocolBuffer(), futureChannel.voidPromise())
         return this
+    }
+
+    override fun connection(): Channel {
+        return this.futureChannel
     }
 
 

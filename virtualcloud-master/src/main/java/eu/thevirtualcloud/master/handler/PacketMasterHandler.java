@@ -62,6 +62,7 @@ public class PacketMasterHandler {
                             .getCloudChannelManager()
                             .getCloudChannel()
                             .dispatchPacket(packetOutChannelHandshake);
+                    CloudAPI.getInstance().getCloudConsole().write("");
                 }
             }
         });

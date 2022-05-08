@@ -32,8 +32,8 @@ import eu.thevirtualcloud.api.exceptions.network.ParalyzedChannelException
 import eu.thevirtualcloud.api.network.IChannel
 import eu.thevirtualcloud.api.network.connection.IConnectionComponent
 import eu.thevirtualcloud.api.network.handler.ICloudHandler
-import eu.thevirtualcloud.api.network.impl.SimpleNetworkHandler
 import eu.thevirtualcloud.api.network.protocol.Packet
+import eu.thevirtualcloud.api.network.client.SimpleClientChannelInit
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.Channel
 import io.netty.channel.EventLoopGroup
@@ -121,7 +121,7 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
                     this.remoteBootstrap = ServerBootstrap()
                         .group(workerGroup)
                         .channel(EpollServerSocketChannel::class.java)
-                        .childHandler(SimpleNetworkHandler())
+                        .childHandler(SimpleServerChannelInit())
                 } else {
                     if (this.threads == -1)
                         this.workerGroup = NioEventLoopGroup() else
@@ -129,7 +129,7 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
                     this.remoteBootstrap = ServerBootstrap()
                         .group(workerGroup)
                         .channel(NioServerSocketChannel::class.java)
-                        .childHandler(SimpleNetworkHandler())
+                        .childHandler(SimpleServerChannelInit())
                 }
             }
             false -> {
@@ -139,7 +139,7 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
                 this.remoteBootstrap = ServerBootstrap()
                     .group(workerGroup)
                     .channel(NioServerSocketChannel::class.java)
-                    .childHandler(SimpleNetworkHandler())
+                    .childHandler(SimpleServerChannelInit())
             }
         }
         return this
@@ -183,8 +183,12 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
     }
 
     override fun dispatchPacket(packet: Packet<*>): IChannel {
-        this.futureChannel.writeAndFlush(packet.toProtocolBuffer())
+        this.futureChannel.writeAndFlush(packet.toProtocolBuffer(), futureChannel.voidPromise())
         return this
+    }
+
+    override fun connection(): Channel {
+        return this.futureChannel
     }
 
 

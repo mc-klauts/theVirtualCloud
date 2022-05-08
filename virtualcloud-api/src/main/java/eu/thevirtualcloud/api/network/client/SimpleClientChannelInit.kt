@@ -22,27 +22,29 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.master.listeners;
+package eu.thevirtualcloud.api.network.client
 
-import eu.thevirtualcloud.api.CloudAPI;
-import eu.thevirtualcloud.master.CloudLauncher;
-import eu.thevirtualcloud.master.events.CloudShutdownEvent;
+import eu.thevirtualcloud.api.network.impl.SimpleNetworkHandler
+import io.netty.channel.Channel
+import io.netty.channel.ChannelInitializer
+import io.netty.channel.socket.SocketChannel
+import io.netty.handler.codec.serialization.ClassResolvers
+import io.netty.handler.codec.serialization.ObjectDecoder
+import io.netty.handler.codec.serialization.ObjectEncoder
 
 /**
- * this doc was created on 07.05.2022
+ *
+ * this doc was created on 08.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
+ *
  */
 
-public class CloudShutdownListener {
+class SimpleClientChannelInit: ChannelInitializer<SocketChannel>() {
 
-    public CloudShutdownListener() {
-        CloudLauncher.getInstance().getCloudRemoteEventRegistry().subscribe(CloudShutdownEvent.class, event -> {
-            CloudAPI.instance.getCloudConsole().write("try to shutdown the cloud");
-            CloudAPI.getInstance().getCloudChannelManager().getCloudChannel().close();
-            CloudAPI.getInstance().getCloudConsole().write("Close the Cloud server...");
-            System.exit(-1);
-        });
+    override fun initChannel(channel: SocketChannel?) {
+        channel!!.pipeline()
+            .addLast(SimpleNetworkHandler())
     }
 }

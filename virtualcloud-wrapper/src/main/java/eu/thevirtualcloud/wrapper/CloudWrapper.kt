@@ -22,9 +22,14 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.packets
+package eu.thevirtualcloud.wrapper
 
-import eu.thevirtualcloud.api.network.protocol.Packet
+import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.event.ICloudEventRegistry
+import eu.thevirtualcloud.wrapper.content.CloudDocumentHandler
+import eu.thevirtualcloud.wrapper.content.CloudNetworkHandler
+import eu.thevirtualcloud.wrapper.layout.CloudConsoleLayout
+import eu.thevirtualcloud.wrapper.listeners.CloudShutdownListener
 
 /**
  *
@@ -35,13 +40,35 @@ import eu.thevirtualcloud.api.network.protocol.Packet
  *
  */
 
-class PacketInChannelHandshake(private val a: String, private val b: String): Packet<PacketInChannelHandshake> {
+class CloudWrapper {
 
-    constructor() : this("null", "null") {
+    private val cloudApi: CloudAPI = CloudAPI()
+
+    companion object {
+        @JvmStatic
+        lateinit var instance: CloudWrapper
     }
 
-    fun a(): String = this.a
+    init {
+        instance = this
+        this.cloudApi.getCloudConsole().insert()
+    }
 
-    fun b(): String = this.b
+    private val cloudEventRegistry: ICloudEventRegistry = ICloudEventRegistry.insert()
+    private val cloudDocumentHandler: CloudDocumentHandler = CloudDocumentHandler()
+    private val cloudNetworkHandler: CloudNetworkHandler = CloudNetworkHandler()
+
+    init {
+
+        CloudShutdownListener()
+        CloudConsoleLayout()
+
+    }
+
+    fun getCloudDocumentHandler(): CloudDocumentHandler = this.cloudDocumentHandler
+
+    fun getCloudNetworkHandler(): CloudNetworkHandler = this.cloudNetworkHandler
+
+    fun getCloudRemoteEventRegistry(): ICloudEventRegistry = this.cloudEventRegistry
 
 }

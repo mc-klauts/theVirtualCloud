@@ -36,6 +36,7 @@ import eu.thevirtualcloud.api.event.ICloudEventManager
 import eu.thevirtualcloud.api.event.impl.SimpleCloudEventManager
 import eu.thevirtualcloud.api.event.impl.types.CloudAPIBootEvent
 import eu.thevirtualcloud.api.network.ICloudChannelManager
+import eu.thevirtualcloud.api.network.IRegistryDispatcher
 import eu.thevirtualcloud.api.network.impl.SimpleCloudChannelManager
 import eu.thevirtualcloud.api.network.impl.SimplePacketRegistry
 import eu.thevirtualcloud.api.network.protocol.PacketRegistry
@@ -66,6 +67,7 @@ class CloudAPI {
 
     init {
         instance = this
+        IRegistryDispatcher.dispatcher().dispatch()
         this.cloudEventManager.callEvent(CloudAPIBootEvent())
     }
 

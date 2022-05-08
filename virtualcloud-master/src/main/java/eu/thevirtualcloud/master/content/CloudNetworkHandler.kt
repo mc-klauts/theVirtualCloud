@@ -54,6 +54,7 @@ class CloudNetworkHandler {
                     CloudAPI.instance.getCloudConsole().write("A new channel has connected")
                 }
             })
+            channel.open()
             CloudAPI.instance.getCloudConsole().write("A cloud server has been bound to port " + ConsoleColorPane.ANSI_BRIGHT_GREEN + CloudLauncher.instance.getCloudDocumentHandler().cloudContentDocument.getInt("cloud.server.port") + ConsoleColorPane.ANSI_RESET)
         } else {
             CloudAPI.instance.getCloudConsole().write("an opening of the cloud server was " + ConsoleColorPane.ANSI_BRIGHT_RED + "denied" + ConsoleColorPane.ANSI_RESET)

@@ -22,27 +22,23 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.master.listeners;
+package eu.thevirtualcloud.wrapper.bootstrap;
 
-import eu.thevirtualcloud.api.CloudAPI;
-import eu.thevirtualcloud.master.CloudLauncher;
-import eu.thevirtualcloud.master.events.CloudShutdownEvent;
+import eu.thevirtualcloud.wrapper.CloudWrapper;
 
 /**
- * this doc was created on 07.05.2022
+ * this doc was created on 08.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  */
 
-public class CloudShutdownListener {
+public class Bootstrap {
 
-    public CloudShutdownListener() {
-        CloudLauncher.getInstance().getCloudRemoteEventRegistry().subscribe(CloudShutdownEvent.class, event -> {
-            CloudAPI.instance.getCloudConsole().write("try to shutdown the cloud");
-            CloudAPI.getInstance().getCloudChannelManager().getCloudChannel().close();
-            CloudAPI.getInstance().getCloudConsole().write("Close the Cloud server...");
-            System.exit(-1);
-        });
+    public static void main(String[] args) {
+
+        new CloudWrapper();
+
     }
+
 }

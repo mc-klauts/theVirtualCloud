@@ -44,7 +44,6 @@ class CloudStopCommand: ICloudCommand {
     override fun onHandle(arguments: Array<String>) {
         CloudAPI.instance.getCloudConsole().write("try to shutdown the cloud")
         CloudAPI.instance.getCloudEventManager().callEvent(CloudShutdownEvent())
-        exitProcess(-1)
     }
 
     override fun description(): String {

@@ -22,27 +22,35 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.master.listeners;
+package eu.thevirtualcloud.wrapper.commands
 
-import eu.thevirtualcloud.api.CloudAPI;
-import eu.thevirtualcloud.master.CloudLauncher;
-import eu.thevirtualcloud.master.events.CloudShutdownEvent;
+import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.commands.ICloudCommand
+import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
 
 /**
+ *
  * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
+ *
  */
 
-public class CloudShutdownListener {
+class CloudHelpCommand: ICloudCommand {
 
-    public CloudShutdownListener() {
-        CloudLauncher.getInstance().getCloudRemoteEventRegistry().subscribe(CloudShutdownEvent.class, event -> {
-            CloudAPI.instance.getCloudConsole().write("try to shutdown the cloud");
-            CloudAPI.getInstance().getCloudChannelManager().getCloudChannel().close();
-            CloudAPI.getInstance().getCloudConsole().write("Close the Cloud server...");
-            System.exit(-1);
-        });
+    override fun onHandle(arguments: Array<String>) {
+        CloudAPI.instance.getCloudConsole().write("")
+        CloudAPI.instance.getCloudConsole().write("the registry loaded" + ConsoleColorPane.ANSI_BRIGHT_GREEN + " " + CloudAPI.instance.getCloudCommandHandler().commands().size + ConsoleColorPane.ANSI_RESET +" commands")
+        CloudAPI.instance.getCloudConsole().write("")
+        for (command in CloudAPI.instance.getCloudCommandHandler().commands()) {
+            CloudAPI.instance.getCloudConsole().write(CloudAPI.instance.getCloudCommandHandler().description(command) + " - " + ConsoleColorPane.ANSI_BRIGHT_GREEN + command)
+        }
+        CloudAPI.instance.getCloudConsole().write("")
     }
+
+    override fun description(): String {
+        return "list of all registered commands"
+    }
+
 }

@@ -26,6 +26,7 @@ package eu.thevirtualcloud.api.network
 
 import eu.thevirtualcloud.api.network.handler.ICloudHandler
 import eu.thevirtualcloud.api.network.protocol.Packet
+import io.netty.channel.Channel
 
 /**
  *
@@ -62,5 +63,7 @@ interface IChannel {
     fun dispatchPacket(packet: Packet<*>): IChannel
 
     fun handler(handler: ICloudHandler): IChannel
+
+    fun connection(): Channel
 
 }

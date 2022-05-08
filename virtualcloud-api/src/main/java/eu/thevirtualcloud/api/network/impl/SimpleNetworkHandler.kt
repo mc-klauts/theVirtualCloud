@@ -29,8 +29,14 @@ import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
 import eu.thevirtualcloud.api.exceptions.network.NotRegisteredRegistryException
 import eu.thevirtualcloud.api.network.protocol.Packet
 import io.netty.buffer.ByteBuf
+import io.netty.channel.ChannelHandlerAdapter
 import io.netty.channel.ChannelHandlerContext
+import io.netty.channel.ChannelInboundHandlerAdapter
 import io.netty.channel.SimpleChannelInboundHandler
+import io.netty.util.ReferenceCountUtil
+import java.util.*
+import javax.swing.text.html.HTML.Tag.I
+
 
 /**
  *
@@ -41,14 +47,22 @@ import io.netty.channel.SimpleChannelInboundHandler
  *
  */
 
-class SimpleNetworkHandler: SimpleChannelInboundHandler<ByteBuf>() {
+class SimpleNetworkHandler: ChannelInboundHandlerAdapter() {
 
-    override fun channelRead0(p0: ChannelHandlerContext?, buffer: ByteBuf?) {
+    override fun channelRead(ctx: ChannelHandlerContext?, msg: Any?) {
+        super.channelRead(ctx, msg)
+        println("Test")
+        val buffer: ByteBuf = msg as ByteBuf
         try {
             if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
-                val packetID = buffer!!.readInt()
+                val packetID = buffer.readInt()
                 val dispatchedPacket: Packet<*> = CloudAPI.instance.getCloudPacketRegistry().fromID(packetID, buffer)
-                DispatcherInterface.dispatchPacket(CloudAPI.instance.getCloudChannelManager().getCloudChannel().handler().packetHandlers(dispatchedPacket.javaClass), dispatchedPacket)
+                DispatcherInterface.dispatchPacket(CloudAPI.instance
+                    .getCloudChannelManager()
+                    .getCloudChannel()
+                    .handler()
+                    .packetHandlers(dispatchedPacket.javaClass),
+                    dispatchedPacket)
             }
         } catch (exception: NotRegisteredRegistryException) {
             CloudAPI.instance.getCloudConsole().write(ConsoleColorPane.ANSI_BRIGHT_RED + exception.message)
@@ -56,23 +70,18 @@ class SimpleNetworkHandler: SimpleChannelInboundHandler<ByteBuf>() {
     }
 
     override fun exceptionCaught(ctx: ChannelHandlerContext?, cause: Throwable?) {
-        super.exceptionCaught(ctx, cause)
+        cause!!.printStackTrace()
         if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
             DispatcherInterface.dispatchExceptionHandle(ctx!!.channel(), cause)
         }
     }
 
-    override fun channelActive(ctx: ChannelHandlerContext?) {
+     override fun channelActive(ctx: ChannelHandlerContext?) {
         super.channelActive(ctx)
-        if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
-            DispatcherInterface.dispatchInboundHandle(ctx!!.channel())
-        }
     }
 
-    override fun channelInactive(ctx: ChannelHandlerContext?) {
+     override fun channelInactive(ctx: ChannelHandlerContext?) {
         super.channelInactive(ctx)
-        if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
-            DispatcherInterface.dispatchUnregisterHandle(ctx!!.channel())
-        }
+
     }
 }
