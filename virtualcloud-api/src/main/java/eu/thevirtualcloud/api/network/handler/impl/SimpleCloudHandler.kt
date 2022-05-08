@@ -48,36 +48,56 @@ class SimpleCloudHandler: ICloudHandler {
 
     override fun <T : Packet<*>> onPacketHandle(type: Class<T>, handler: PacketHandler<T>) {
         if (packetHandlers.containsKey(type)) {
+<<<<<<< HEAD
             this.packetHandlers[type]!!
                 .add(handler)
+=======
+            this.packetHandlers[type]!!.add(handler)
+>>>>>>> origin/master
         } else this.packetHandlers[type] = ArrayList(listOf(handler))
     }
 
     override fun onChannelInbound(handler: ChannelHandler) {
         if (channelHandlers.containsKey(HandlerType.CHANNEL_INBOUND)) {
+<<<<<<< HEAD
             this.channelHandlers[HandlerType.CHANNEL_INBOUND]!!
                 .add(handler)
+=======
+            this.channelHandlers[HandlerType.CHANNEL_INBOUND]!!.add(handler)
+>>>>>>> origin/master
         } else this.channelHandlers[HandlerType.CHANNEL_INBOUND] = ArrayList(listOf(handler))
     }
 
     override fun onChannelUnregister(handler: ChannelHandler) {
         if (channelHandlers.containsKey(HandlerType.CHANNEL_UNREGISTER)) {
+<<<<<<< HEAD
             this.channelHandlers[HandlerType.CHANNEL_UNREGISTER]!!
                 .add(handler)
+=======
+            this.channelHandlers[HandlerType.CHANNEL_UNREGISTER]!!.add(handler)
+>>>>>>> origin/master
         } else this.channelHandlers[HandlerType.CHANNEL_UNREGISTER] = ArrayList(listOf(handler))
     }
 
     override fun onChannelCatchException(handler: ChannelExceptionHandler) {
         if (channelHandlers.containsKey(HandlerType.CHANNEL_CATCH_EXCEPTION)) {
+<<<<<<< HEAD
             this.channelHandlers[HandlerType.CHANNEL_CATCH_EXCEPTION]!!
                 .add(handler)
+=======
+            this.channelHandlers[HandlerType.CHANNEL_CATCH_EXCEPTION]!!.add(handler)
+>>>>>>> origin/master
         } else this.channelHandlers[HandlerType.CHANNEL_CATCH_EXCEPTION] = ArrayList(listOf(handler))
     }
 
     override fun onOwnChannelMessageHandle(handler: InternalChannelHandler) {
         if (channelHandlers.containsKey(HandlerType.OWN_CHANNEL_MESSAGE)) {
+<<<<<<< HEAD
             this.channelHandlers[HandlerType.OWN_CHANNEL_MESSAGE]!!
                 .add(handler)
+=======
+            this.channelHandlers[HandlerType.OWN_CHANNEL_MESSAGE]!!.add(handler)
+>>>>>>> origin/master
         } else this.channelHandlers[HandlerType.OWN_CHANNEL_MESSAGE] = ArrayList(listOf(handler))
     }
 
