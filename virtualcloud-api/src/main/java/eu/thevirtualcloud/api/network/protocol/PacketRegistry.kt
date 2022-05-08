@@ -12,17 +12,6 @@ import java.util.*
 @Suppress("SENSELESS_COMPARISON")
 abstract class PacketRegistry {
 
-    companion object {
-
-        private var registry: PacketRegistry = SimplePacketRegistry()
-
-        fun<T: PacketRegistry> getPacketRegistry(): T {
-            @Suppress("UNCHECKED_CAST")
-            return this.registry as T
-        }
-
-    }
-
     private val registry: LinkedList<Class<out Packet<*>>> = LinkedList()
 
     fun registerPacket(type: Class<out Packet<*>>): PacketRegistry {

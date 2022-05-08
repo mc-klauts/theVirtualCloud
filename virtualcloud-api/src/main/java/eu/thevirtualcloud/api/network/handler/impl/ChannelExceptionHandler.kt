@@ -22,45 +22,21 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.network
+package eu.thevirtualcloud.api.network.handler.impl
 
-import eu.thevirtualcloud.api.network.handler.ICloudHandler
 import io.netty.channel.Channel
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 08.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface IChannel {
+interface ChannelExceptionHandler {
 
-    fun open(): IChannel
-
-    fun isOpen(): Boolean
-
-    fun closeFuture(): IChannel
-
-    fun isCloseFuture(): Boolean
-
-    fun insertChannel(): IChannel
-
-    @Deprecated("ChannelException")
-    fun write(raw: Any): IChannel
-
-    fun maxThreads(index: Int): IChannel
-
-    fun close(): IChannel
-
-    fun connection(): Channel
-
-    fun handler(handler: ICloudHandler)
-
-    fun hasHandler(): Boolean
-
-    fun handler(): ICloudHandler
+    fun onHandle(connection: Channel, exception: Throwable?)
 
 }

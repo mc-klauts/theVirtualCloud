@@ -22,45 +22,40 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.network
+package eu.thevirtualcloud.api.network.handler
 
-import eu.thevirtualcloud.api.network.handler.ICloudHandler
-import io.netty.channel.Channel
+import eu.thevirtualcloud.api.network.handler.impl.*
+import eu.thevirtualcloud.api.network.protocol.Packet
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 08.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface IChannel {
+interface ICloudHandler {
 
-    fun open(): IChannel
+    companion object {
+        fun getDefaultChannelHandler(): ICloudHandler {
+            return SimpleCloudHandler()
+        }
+    }
 
-    fun isOpen(): Boolean
+    fun <T : Packet<*>> onPacketHandle(type: Class<T>, handler: PacketHandler<T>)
 
-    fun closeFuture(): IChannel
+    fun onChannelInbound(handler: ChannelHandler)
 
-    fun isCloseFuture(): Boolean
+    fun onChannelUnregister(handler: ChannelHandler)
 
-    fun insertChannel(): IChannel
+    fun onChannelCatchException(handler: ChannelExceptionHandler)
 
-    @Deprecated("ChannelException")
-    fun write(raw: Any): IChannel
+    fun onOwnChannelMessageHandle(handler: InternalChannelHandler)
 
-    fun maxThreads(index: Int): IChannel
+    fun packetHandlers(type: Class<out Packet<*>>): ArrayList<PacketHandler<*>>?
 
-    fun close(): IChannel
-
-    fun connection(): Channel
-
-    fun handler(handler: ICloudHandler)
-
-    fun hasHandler(): Boolean
-
-    fun handler(): ICloudHandler
+    fun channelHandlers(type: HandlerType): ArrayList<Any>
 
 }

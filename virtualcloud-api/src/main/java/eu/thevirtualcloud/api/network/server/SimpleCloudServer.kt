@@ -31,6 +31,7 @@ import eu.thevirtualcloud.api.exceptions.network.ChannelThreadException
 import eu.thevirtualcloud.api.exceptions.network.ParalyzedChannelException
 import eu.thevirtualcloud.api.network.IChannel
 import eu.thevirtualcloud.api.network.connection.IConnectionComponent
+import eu.thevirtualcloud.api.network.handler.ICloudHandler
 import eu.thevirtualcloud.api.network.impl.SimpleNetworkHandler
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.Channel
@@ -59,6 +60,7 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
     private var open: Boolean = false
     private var wait: Boolean = false
     private var threads: Int = -1
+    private var handler: ICloudHandler? = null
 
     override fun open(): IChannel {
         when (this.wait) {
@@ -163,6 +165,22 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
         this.workerGroup.shutdownGracefully()
         this.futureChannel.close()
         return this
+    }
+
+    override fun connection(): Channel {
+        return this.futureChannel
+    }
+
+    override fun handler(handler: ICloudHandler) {
+        this.handler = handler
+    }
+
+    override fun handler(): ICloudHandler {
+        return this.handler!!
+    }
+
+    override fun hasHandler(): Boolean {
+        return this.handler != null
     }
 
 

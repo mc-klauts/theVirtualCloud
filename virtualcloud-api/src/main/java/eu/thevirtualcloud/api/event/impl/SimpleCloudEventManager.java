@@ -28,6 +28,8 @@ import eu.thevirtualcloud.api.event.CloudEvent;
 import eu.thevirtualcloud.api.event.EventHandler;
 import eu.thevirtualcloud.api.event.ICloudEventManager;
 import eu.thevirtualcloud.api.event.ICloudEventRegistry;
+import eu.thevirtualcloud.api.network.handler.impl.ChannelHandler;
+import io.netty.channel.Channel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
