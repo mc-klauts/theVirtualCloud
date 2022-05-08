@@ -25,13 +25,12 @@
 package eu.thevirtualcloud.master.content
 
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonElement
 import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.config.IDocument
 import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
 import eu.thevirtualcloud.api.console.question.IQuestSession
 import eu.thevirtualcloud.api.content.types.CloudConstructionContent
-import eu.thevirtualcloud.api.threading.CloudWrapperArray
+import eu.thevirtualcloud.api.utilities.array.CloudWrapperArray
 import eu.thevirtualcloud.api.utilities.FileUtils
 import eu.thevirtualcloud.master.CloudLauncher
 import java.io.File

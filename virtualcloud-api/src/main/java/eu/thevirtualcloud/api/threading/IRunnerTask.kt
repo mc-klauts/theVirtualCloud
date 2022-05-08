@@ -24,28 +24,21 @@
 
 package eu.thevirtualcloud.api.threading
 
-import eu.thevirtualcloud.api.content.types.wrapper.CloudWrapper
-
 /**
- *
- * this doc was created on 07.05.2022
- * This class belongs to the theVirtualCloud project
- *
- * @author Generix030
- *
+ * java doc created on 08.05.2022
+ * @author Alexa
  */
 
-class CloudWrapperArray {
+interface IRunnerTask {
 
-    private val remote: ArrayList<CloudWrapper> = ArrayList()
+    fun cancel(): IRunnerTask
 
-    fun getWrappers(): ArrayList<CloudWrapper> {
-        return this.remote
-    }
+    fun submit(task: ITaskHandler): IRunnerTask
 
-    fun add(wrapper: CloudWrapper): CloudWrapperArray {
-        this.remote.add(wrapper)
-        return this
-    }
+    fun runner(runnerType: RunnerType): IRunnerTask
+
+    fun onSubmit(delay: Int, period: Int): IRunnerTask
+
+    fun onSubmit(delay: Int): IRunnerTask
 
 }

@@ -22,21 +22,30 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.common
+package eu.thevirtualcloud.api.utilities.array
 
-import java.util.UUID
+import eu.thevirtualcloud.api.content.types.wrapper.CloudWrapper
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface UIDDabble {
+class CloudWrapperArray {
 
-    fun getUID(): UUID
+    private val remote: ArrayList<CloudWrapper> = ArrayList()
+
+    fun getWrappers(): ArrayList<CloudWrapper> {
+        return this.remote
+    }
+
+    fun add(wrapper: CloudWrapper): CloudWrapperArray {
+        this.remote.add(wrapper)
+        return this
+    }
 
 }

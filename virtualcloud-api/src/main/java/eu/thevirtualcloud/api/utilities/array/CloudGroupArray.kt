@@ -22,44 +22,30 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.event;
+package eu.thevirtualcloud.api.utilities.array
 
-import eu.thevirtualcloud.api.CloudAPI;
-import eu.thevirtualcloud.api.common.IUIDDabble;
-import eu.thevirtualcloud.api.event.impl.SimpleCloudEventRegistry;
-
-import java.util.Collection;
+import eu.thevirtualcloud.api.content.types.service.CloudServiceGroup
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-@SuppressWarnings("UnusedReturnValue")
-public interface ICloudEventRegistry extends IUIDDabble {
+class CloudGroupArray {
 
-    static ICloudEventRegistry insert() {
-        ICloudEventRegistry registry = new SimpleCloudEventRegistry();
-        CloudAPI.getInstance().getCloudEventManager().registerCloudRegistry(registry);
-        return registry;
+    private val remote: ArrayList<CloudServiceGroup> = ArrayList()
+
+    fun getWrappers(): ArrayList<CloudServiceGroup> {
+        return this.remote
     }
 
-    <T extends CloudEvent> int subscribe(Class<T> type, EventHandler<T> handler);
-
-    ICloudEventRegistry resubscribe(Class<? extends CloudEvent> type);
-
-    ICloudEventRegistry clearSubscribes();
-
-    ICloudEventRegistry resubscribe(Class<? extends CloudEvent> type, int index);
-
-    Collection<EventHandler<?>> handlers(Class<? extends CloudEvent> type);
-
-    Collection<EventHandler<? extends CloudEvent>> handlers();
-
-    int indexOf(EventHandler<? extends CloudEvent> handler);
+    fun add(service: CloudServiceGroup): CloudGroupArray {
+        this.remote.add(service)
+        return this
+    }
 
 }

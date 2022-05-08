@@ -24,29 +24,13 @@
 
 package eu.thevirtualcloud.api.threading
 
-import eu.thevirtualcloud.api.content.types.service.CloudServiceGroup
-import eu.thevirtualcloud.api.content.types.wrapper.CloudWrapper
-
 /**
- *
- * this doc was created on 07.05.2022
- * This class belongs to the theVirtualCloud project
- *
- * @author Generix030
- *
+ * java doc created on 08.05.2022
+ * @author Alexa
  */
 
-class CloudGroupArray {
+interface ITaskHandler {
 
-    private val remote: ArrayList<CloudServiceGroup> = ArrayList()
-
-    fun getWrappers(): ArrayList<CloudServiceGroup> {
-        return this.remote
-    }
-
-    fun add(service: CloudServiceGroup): CloudGroupArray {
-        this.remote.add(service)
-        return this
-    }
+    fun handle()
 
 }

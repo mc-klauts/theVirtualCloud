@@ -22,13 +22,9 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.event;
+package eu.thevirtualcloud.api.common
 
-import eu.thevirtualcloud.api.CloudAPI;
-import eu.thevirtualcloud.api.common.IUIDDabble;
-import eu.thevirtualcloud.api.event.impl.SimpleCloudEventRegistry;
-
-import java.util.Collection;
+import java.util.UUID
 
 /**
  *
@@ -39,27 +35,8 @@ import java.util.Collection;
  *
  */
 
-@SuppressWarnings("UnusedReturnValue")
-public interface ICloudEventRegistry extends IUIDDabble {
+interface IUIDDabble {
 
-    static ICloudEventRegistry insert() {
-        ICloudEventRegistry registry = new SimpleCloudEventRegistry();
-        CloudAPI.getInstance().getCloudEventManager().registerCloudRegistry(registry);
-        return registry;
-    }
-
-    <T extends CloudEvent> int subscribe(Class<T> type, EventHandler<T> handler);
-
-    ICloudEventRegistry resubscribe(Class<? extends CloudEvent> type);
-
-    ICloudEventRegistry clearSubscribes();
-
-    ICloudEventRegistry resubscribe(Class<? extends CloudEvent> type, int index);
-
-    Collection<EventHandler<?>> handlers(Class<? extends CloudEvent> type);
-
-    Collection<EventHandler<? extends CloudEvent>> handlers();
-
-    int indexOf(EventHandler<? extends CloudEvent> handler);
+    fun getUID(): UUID
 
 }
