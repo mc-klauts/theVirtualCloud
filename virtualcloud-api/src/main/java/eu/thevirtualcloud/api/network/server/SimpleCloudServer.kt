@@ -183,7 +183,7 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
     }
 
     override fun dispatchPacket(packet: Packet<*>): IChannel {
-        this.futureChannel.writeAndFlush(packet.toProtocolBuffer(), futureChannel.voidPromise())
+        this.futureChannel.writeAndFlush(packet.toProtocolBuffer().getRemoteBuffer(), futureChannel.voidPromise())
         return this
     }
 

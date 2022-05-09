@@ -22,31 +22,22 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.network.server
+package eu.thevirtualcloud.api.network.impl.debug
 
-import eu.thevirtualcloud.api.network.impl.SimpleNetworkHandler
-import eu.thevirtualcloud.api.network.impl.debug.SimpleLoggingHandler
-import io.netty.channel.Channel
-import io.netty.channel.ChannelInitializer
-import io.netty.channel.ServerChannel
-import io.netty.handler.codec.serialization.ClassResolvers
-import io.netty.handler.codec.serialization.ObjectDecoder
-import io.netty.handler.codec.serialization.ObjectEncoder
-import java.nio.channels.SocketChannel
+import io.netty.channel.ChannelHandlerContext
+import io.netty.channel.ChannelPromise
+import io.netty.handler.logging.LoggingHandler
 
 /**
  *
- * this doc was created on 08.05.2022
+ * this doc was created on 09.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-class SimpleServerChannelInit: ChannelInitializer<Channel>() {
-    override fun initChannel(channel: Channel?) {
-        channel!!.pipeline()
-            .addLast(SimpleNetworkHandler())
-    }
+class SimpleLoggingHandler: LoggingHandler() {
+
 
 }

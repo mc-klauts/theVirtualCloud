@@ -25,6 +25,7 @@
 package eu.thevirtualcloud.api.network.client
 
 import eu.thevirtualcloud.api.network.impl.SimpleNetworkHandler
+import eu.thevirtualcloud.api.network.impl.debug.SimpleLoggingHandler
 import io.netty.channel.Channel
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.socket.SocketChannel
@@ -47,4 +48,5 @@ class SimpleClientChannelInit: ChannelInitializer<SocketChannel>() {
         channel!!.pipeline()
             .addLast(SimpleNetworkHandler())
     }
+
 }

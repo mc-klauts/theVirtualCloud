@@ -27,15 +27,13 @@ package eu.thevirtualcloud.api.network.impl
 import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
 import eu.thevirtualcloud.api.exceptions.network.NotRegisteredRegistryException
+import eu.thevirtualcloud.api.network.protocol.NetworkBuffer
 import eu.thevirtualcloud.api.network.protocol.Packet
 import io.netty.buffer.ByteBuf
-import io.netty.channel.ChannelHandlerAdapter
+import io.netty.channel.ChannelHandler
 import io.netty.channel.ChannelHandlerContext
-import io.netty.channel.ChannelInboundHandlerAdapter
 import io.netty.channel.SimpleChannelInboundHandler
-import io.netty.util.ReferenceCountUtil
 import java.util.*
-import javax.swing.text.html.HTML.Tag.I
 
 
 /**
@@ -49,18 +47,18 @@ import javax.swing.text.html.HTML.Tag.I
 
 class SimpleNetworkHandler: SimpleChannelInboundHandler<ByteBuf>() {
 
-    override fun acceptInboundMessage(msg: Any?): Boolean {
-        println("acceptInboundMessage")
-        return super.acceptInboundMessage(msg)
+    fun messageReceived(ctx: ChannelHandlerContext?, msg: Any?) {
+        channelRead0(ctx, msg as ByteBuf?)
     }
 
     override fun channelRead0(ctx: ChannelHandlerContext?, msg: ByteBuf?) {
-        super.channelRead(ctx, msg)
-        println("Test")
         val buffer: ByteBuf = msg as ByteBuf
         try {
             if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
                 val packetID = buffer.readInt()
+                val b = NetworkBuffer()
+                println(b.readString())
+                println("----")
                 val dispatchedPacket: Packet<*> = CloudAPI.instance.getCloudPacketRegistry().fromID(packetID, buffer)
                 DispatcherInterface.dispatchPacket(CloudAPI.instance
                     .getCloudChannelManager()

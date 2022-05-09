@@ -32,6 +32,7 @@ import eu.thevirtualcloud.api.exceptions.network.ParalyzedChannelException
 import eu.thevirtualcloud.api.network.IChannel
 import eu.thevirtualcloud.api.network.connection.IConnectionComponent
 import eu.thevirtualcloud.api.network.handler.ICloudHandler
+import eu.thevirtualcloud.api.network.protocol.NetworkBuffer
 import eu.thevirtualcloud.api.network.protocol.Packet
 import io.netty.bootstrap.Bootstrap
 import io.netty.channel.Channel
@@ -182,7 +183,12 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
     }
 
     override fun dispatchPacket(packet: Packet<*>): IChannel {
-        this.futureChannel.writeAndFlush(packet.toProtocolBuffer(), futureChannel.voidPromise())
+        val c = packet.toProtocolBuffer()
+        println(c.getRemoteBuffer().readInt())
+        println(c.readString())
+        println(c.readString())
+        println("out")
+        this.futureChannel.writeAndFlush(packet.toProtocolBuffer().getRemoteBuffer(), futureChannel.voidPromise())
         return this
     }
 

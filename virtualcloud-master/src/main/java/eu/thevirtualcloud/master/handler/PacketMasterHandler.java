@@ -50,6 +50,8 @@ public class PacketMasterHandler {
                     .getCloudDocumentHandler()
                     .readWrappers()
                     .getWrappers()) {
+                System.out.println(wrapper.getName());
+                System.out.println(packetInChannelHandshake.a());
                 if (wrapper.getName().equals(packetInChannelHandshake.a())) {
                     PacketOutChannelHandshake packetOutChannelHandshake = new PacketOutChannelHandshake(Objects
                             .requireNonNull(CloudLauncher
