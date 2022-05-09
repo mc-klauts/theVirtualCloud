@@ -56,9 +56,6 @@ class SimpleNetworkHandler: SimpleChannelInboundHandler<ByteBuf>() {
         try {
             if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
                 val packetID = buffer.readInt()
-                val b = NetworkBuffer()
-                println(b.readString())
-                println("----")
                 val dispatchedPacket: Packet<*> = CloudAPI.instance.getCloudPacketRegistry().fromID(packetID, buffer)
                 DispatcherInterface.dispatchPacket(CloudAPI.instance
                     .getCloudChannelManager()

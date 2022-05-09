@@ -43,8 +43,7 @@ interface Packet<T> {
     fun toProtocolBuffer(): NetworkBuffer {
         if (CloudAPI.instance.getCloudPacketRegistry().contains(this.javaClass)) {
             val buffer = NetworkBuffer()
-            val obj = this.javaClass
-            val i = this.javaClass.getConstructor().newInstance()
+            val obj = this
             buffer.getRemoteBuffer().writeInt(CloudAPI.instance.getCloudPacketRegistry().packetTypeID(this.javaClass))
             for (field in this::class.java.declaredFields) {
                 if (!field.isAccessible) field.isAccessible = true
@@ -52,8 +51,6 @@ interface Packet<T> {
                     when (field.type) {
                         String::class.java -> {
                             buffer.writeString(field.get(obj) as String)
-                            println(field.get(i) as String)
-                            println("ref")
                         }
                         UUID::class.java -> {
                             buffer.writeUUID(field.get(obj) as UUID)
@@ -133,10 +130,6 @@ interface Packet<T> {
                     fields.set(obj, protocolBuffer.readString())
                 }
             }
-        }
-        for (field in obj.javaClass.declaredFields) {
-            if (!field.isAccessible) field.isAccessible = true
-            println(field.get(obj))
         }
         return obj as T;
     }
