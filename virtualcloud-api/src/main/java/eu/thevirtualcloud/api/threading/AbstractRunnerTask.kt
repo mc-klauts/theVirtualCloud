@@ -24,6 +24,7 @@
 
 package eu.thevirtualcloud.api.threading
 
+import eu.thevirtualcloud.api.exceptions.TaskRunnerException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -57,6 +58,16 @@ abstract class AbstractRunnerTask: IRunnerTask {
             if (this.runnerType == RunnerType.ASYNCHRONIZED)
                 executor.submit { task.handle() } else
                 Runnable { task.handle() }.run()
+        } else if (this.delay == -1 && this.period != -1) throw TaskRunnerException()
+        else {
+            if (period == -1) {
+                if (this.runnerType == RunnerType.SYNCHRONIZED) {
+                    this.thread.run {
+                        task.handle()
+                    }
+                    executor.submit { this.thread.start() }
+                }
+            }
         }
         return this
     }

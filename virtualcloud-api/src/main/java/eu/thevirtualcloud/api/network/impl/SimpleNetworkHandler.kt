@@ -47,9 +47,14 @@ import javax.swing.text.html.HTML.Tag.I
  *
  */
 
-class SimpleNetworkHandler: ChannelInboundHandlerAdapter() {
+class SimpleNetworkHandler: SimpleChannelInboundHandler<ByteBuf>() {
 
-    override fun channelRead(ctx: ChannelHandlerContext?, msg: Any?) {
+    override fun acceptInboundMessage(msg: Any?): Boolean {
+        println("acceptInboundMessage")
+        return super.acceptInboundMessage(msg)
+    }
+
+    override fun channelRead0(ctx: ChannelHandlerContext?, msg: ByteBuf?) {
         super.channelRead(ctx, msg)
         println("Test")
         val buffer: ByteBuf = msg as ByteBuf

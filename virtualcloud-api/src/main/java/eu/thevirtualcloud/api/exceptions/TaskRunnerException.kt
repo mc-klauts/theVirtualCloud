@@ -22,35 +22,16 @@
  * SOFTWARE.
  */
 
-package eu.thevirtualcloud.api.packets
-
-import eu.thevirtualcloud.api.network.protocol.NetworkBuffer
-import eu.thevirtualcloud.api.network.protocol.Packet
-import io.netty.buffer.ByteBuf
+package eu.thevirtualcloud.api.exceptions
 
 /**
  *
- * this doc was created on 08.05.2022
+ * this doc was created on 09.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-class PacketInChannelHandshake(private val a: String, private val b: String): Packet<PacketInChannelHandshake> {
-
-    constructor() : this("null", "null") {
-    }
-
-    fun a(): String = this.a
-
-    fun b(): String = this.b
-
-    override fun toProtocolBuffer(): NetworkBuffer {
-        return super.toProtocolBuffer()
-    }
-
-    override fun fromProtocolPuffer(buffer: ByteBuf): PacketInChannelHandshake {
-        return super.fromProtocolPuffer(buffer)
-    }
+class TaskRunnerException: Exception() {
 }

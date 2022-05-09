@@ -24,7 +24,9 @@
 
 package eu.thevirtualcloud.api.packets
 
+import eu.thevirtualcloud.api.network.protocol.NetworkBuffer
 import eu.thevirtualcloud.api.network.protocol.Packet
+import io.netty.buffer.ByteBuf
 
 /**
  *
@@ -39,4 +41,11 @@ class PacketOutChannelHandshake(private val a: String): Packet<PacketOutChannelH
 
     fun a(): String = this.a
 
+    override fun toProtocolBuffer(): NetworkBuffer {
+        return super.toProtocolBuffer()
+    }
+
+    override fun fromProtocolPuffer(buffer: ByteBuf): PacketOutChannelHandshake {
+        return super.fromProtocolPuffer(buffer)
+    }
 }
