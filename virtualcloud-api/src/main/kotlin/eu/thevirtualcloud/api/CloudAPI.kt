@@ -32,6 +32,8 @@ import eu.thevirtualcloud.api.console.ICloudConsole
 import eu.thevirtualcloud.api.console.impl.SimpleCloudConsole
 import eu.thevirtualcloud.api.content.IContentLoader
 import eu.thevirtualcloud.api.content.impl.SimpleContentLoader
+import eu.thevirtualcloud.api.database.IDatabaseAdapter
+import eu.thevirtualcloud.api.database.impl.DatabaseAdapter
 import eu.thevirtualcloud.api.event.ICloudEventManager
 import eu.thevirtualcloud.api.event.impl.SimpleCloudEventManager
 import eu.thevirtualcloud.api.event.impl.types.CloudAPIBootEvent
@@ -59,6 +61,7 @@ class CloudAPI {
     private val cloudContentLoader: IContentLoader = SimpleContentLoader()
     private val cloudConfigFactory: IConfigurationFactory = SimpleConfigurationFactory()
     private val cloudPacketRegistry: PacketRegistry = SimplePacketRegistry()
+    private val databaseAdapter: IDatabaseAdapter = DatabaseAdapter("localhost", "cloud", "virtualcloud-development", "72mwG3ATkah088R")
 
     companion object {
         @JvmStatic
@@ -84,5 +87,7 @@ class CloudAPI {
     fun getCloudConsole(): ICloudConsole = this.cloudConsole
 
     fun getCloudEventManager(): ICloudEventManager = this.cloudEventManager
+
+    fun getDatabaseAdapter(): IDatabaseAdapter = this.databaseAdapter
 
 }
