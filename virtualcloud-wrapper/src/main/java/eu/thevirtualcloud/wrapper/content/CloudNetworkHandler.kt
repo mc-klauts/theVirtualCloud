@@ -72,6 +72,7 @@ class CloudNetworkHandler {
                     .getCloudDocumentHandler()
                     .cloudDocumentContentHandler.key)
             this.channel.dispatchPacket(handshake)
+            this.channel.dispatchPacket(handshake)
         } catch (exception: EmptyInterfaceException) {
             CloudAPI.instance.getCloudConsole().write(ConsoleColorPane.ANSI_BRIGHT_RED + exception.message)
         }

@@ -122,7 +122,7 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
                     this.remoteBootstrap = Bootstrap()
                         .group(workerGroup)
                         .channel(EpollSocketChannel::class.java)
-                        .handler(SimpleNetworkHandler())
+                        .handler(SimpleClientChannelInit())
                 } else {
                     if (this.threads == -1)
                         this.workerGroup = NioEventLoopGroup() else
@@ -130,7 +130,7 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
                     this.remoteBootstrap = Bootstrap()
                         .group(workerGroup)
                         .channel(NioSocketChannel::class.java)
-                        .handler(SimpleNetworkHandler())
+                        .handler(SimpleClientChannelInit())
                 }
             }
             false -> {
@@ -140,7 +140,7 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
                 this.remoteBootstrap = Bootstrap()
                     .group(workerGroup)
                     .channel(NioSocketChannel::class.java)
-                    .handler(SimpleNetworkHandler())
+                    .handler(SimpleClientChannelInit())
             }
         }
         return this

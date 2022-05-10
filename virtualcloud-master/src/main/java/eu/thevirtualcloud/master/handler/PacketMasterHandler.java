@@ -54,20 +54,19 @@ public class PacketMasterHandler {
                     .readWrappers()
                     .getWrappers()) {
                 if (wrapper.getName().equals(packetInChannelHandshake.a())) {
-                    PacketOutChannelHandshake packetOutChannelHandshake = new PacketOutChannelHandshake(Objects
-                            .requireNonNull(CloudLauncher
-                                    .getInstance()
-                                    .getCloudDocumentHandler()
-                                    .getCloudContentDocument()
-                                    .getString("cloud.server.host")));
                     if (wrapper.getKey().equals(packetInChannelHandshake.b())) {
-                        CloudAPI.getInstance().getCloudConsole().write((wrapper.getName()) + " has " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "successfully " + ConsoleColorPane.ANSI_RESET + "connected");
+                        PacketOutChannelHandshake packetOutChannelHandshake = new PacketOutChannelHandshake(Objects
+                                .requireNonNull(CloudLauncher
+                                        .getInstance()
+                                        .getCloudDocumentHandler()
+                                        .getCloudContentDocument()
+                                        .getString("cloud.server.host")));
                         CloudAPI
                                 .getInstance()
                                 .getCloudChannelManager()
                                 .getCloudChannel()
                                 .dispatchPacket(packetOutChannelHandshake);
-                        System.out.println("NEW PACKET SEND");
+                        CloudAPI.getInstance().getCloudConsole().write((wrapper.getName()) + " has " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "successfully " + ConsoleColorPane.ANSI_RESET + "connected");
                     }
                 }
             }

@@ -42,7 +42,6 @@ class SimpleClientChannelInit: ChannelInitializer<Channel>() {
 
     override fun initChannel(channel: Channel?) {
         channel!!.pipeline()
-            .addLast(SimpleLoggingHandler())
             .addLast(SimpleNetworkHandler())
     }
 

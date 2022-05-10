@@ -24,6 +24,10 @@
 
 package eu.thevirtualcloud.api.network.impl.debug
 
+import eu.thevirtualcloud.api.CloudAPI
+import eu.thevirtualcloud.api.console.impl.ConsoleColorPane
+import eu.thevirtualcloud.api.network.protocol.NetworkBuffer
+import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.ChannelPromise
 import io.netty.handler.logging.LoggingHandler
@@ -39,14 +43,20 @@ import io.netty.handler.logging.LoggingHandler
 
 class SimpleLoggingHandler: LoggingHandler() {
 
-
     override fun channelRead(ctx: ChannelHandlerContext?, msg: Any?) {
         super.channelRead(ctx, msg)
-        println("READ")
+        val buffer = NetworkBuffer(msg as ByteBuf)
+        CloudAPI.instance
+            .getCloudConsole()
+            .write(ConsoleColorPane.ANSI_YELLOW + "READ + " + msg.javaClass.name)
     }
 
     override fun write(ctx: ChannelHandlerContext?, msg: Any?, promise: ChannelPromise?) {
         super.write(ctx, msg, promise)
-        println("WRITE")
+        val buffer = NetworkBuffer(msg as ByteBuf)
+        CloudAPI.instance
+            .getCloudConsole()
+            .write(ConsoleColorPane.ANSI_YELLOW + "WRITE + " + msg.javaClass.name)
     }
+
 }
