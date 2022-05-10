@@ -48,6 +48,7 @@ import java.util.*
 class SimpleNetworkHandler: SimpleChannelInboundHandler<ByteBuf>() {
 
     fun messageReceived(ctx: ChannelHandlerContext?, msg: Any?) {
+        println("message")
         channelRead0(ctx, msg as ByteBuf?)
     }
 

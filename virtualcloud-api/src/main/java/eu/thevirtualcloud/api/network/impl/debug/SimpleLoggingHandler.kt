@@ -40,4 +40,13 @@ import io.netty.handler.logging.LoggingHandler
 class SimpleLoggingHandler: LoggingHandler() {
 
 
+    override fun channelRead(ctx: ChannelHandlerContext?, msg: Any?) {
+        super.channelRead(ctx, msg)
+        println("READ")
+    }
+
+    override fun write(ctx: ChannelHandlerContext?, msg: Any?, promise: ChannelPromise?) {
+        super.write(ctx, msg, promise)
+        println("WRITE")
+    }
 }

@@ -48,6 +48,7 @@ public class PacketWrapperHandler {
                 .getCloudChannel()
                 .handler()
                 .onPacketHandle(PacketOutChannelHandshake.class, raw -> {
+                    System.out.println("TEST");
                     PacketOutChannelHandshake packetOutChannelHandshake = (PacketOutChannelHandshake) raw;
                     CloudAPI.instance
                             .getCloudConsole()

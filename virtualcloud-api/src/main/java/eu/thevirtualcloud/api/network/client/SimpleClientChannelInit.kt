@@ -28,10 +28,6 @@ import eu.thevirtualcloud.api.network.impl.SimpleNetworkHandler
 import eu.thevirtualcloud.api.network.impl.debug.SimpleLoggingHandler
 import io.netty.channel.Channel
 import io.netty.channel.ChannelInitializer
-import io.netty.channel.socket.SocketChannel
-import io.netty.handler.codec.serialization.ClassResolvers
-import io.netty.handler.codec.serialization.ObjectDecoder
-import io.netty.handler.codec.serialization.ObjectEncoder
 
 /**
  *
@@ -42,10 +38,11 @@ import io.netty.handler.codec.serialization.ObjectEncoder
  *
  */
 
-class SimpleClientChannelInit: ChannelInitializer<SocketChannel>() {
+class SimpleClientChannelInit: ChannelInitializer<Channel>() {
 
-    override fun initChannel(channel: SocketChannel?) {
+    override fun initChannel(channel: Channel?) {
         channel!!.pipeline()
+            .addLast(SimpleLoggingHandler())
             .addLast(SimpleNetworkHandler())
     }
 

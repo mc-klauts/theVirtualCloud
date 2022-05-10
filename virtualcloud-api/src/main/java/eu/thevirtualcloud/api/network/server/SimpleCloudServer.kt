@@ -34,6 +34,7 @@ import eu.thevirtualcloud.api.network.connection.IConnectionComponent
 import eu.thevirtualcloud.api.network.handler.ICloudHandler
 import eu.thevirtualcloud.api.network.protocol.Packet
 import eu.thevirtualcloud.api.network.client.SimpleClientChannelInit
+import eu.thevirtualcloud.api.network.impl.SimpleNetworkHandler
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.Channel
 import io.netty.channel.EventLoopGroup
@@ -121,7 +122,7 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
                     this.remoteBootstrap = ServerBootstrap()
                         .group(workerGroup)
                         .channel(EpollServerSocketChannel::class.java)
-                        .childHandler(SimpleServerChannelInit())
+                        .childHandler(SimpleNetworkHandler())
                 } else {
                     if (this.threads == -1)
                         this.workerGroup = NioEventLoopGroup() else
@@ -129,7 +130,7 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
                     this.remoteBootstrap = ServerBootstrap()
                         .group(workerGroup)
                         .channel(NioServerSocketChannel::class.java)
-                        .childHandler(SimpleServerChannelInit())
+                        .childHandler(SimpleNetworkHandler())
                 }
             }
             false -> {
@@ -139,7 +140,7 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
                 this.remoteBootstrap = ServerBootstrap()
                     .group(workerGroup)
                     .channel(NioServerSocketChannel::class.java)
-                    .childHandler(SimpleServerChannelInit())
+                    .childHandler(SimpleNetworkHandler())
             }
         }
         return this

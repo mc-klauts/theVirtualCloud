@@ -46,6 +46,7 @@ import java.nio.channels.SocketChannel
 class SimpleServerChannelInit: ChannelInitializer<Channel>() {
     override fun initChannel(channel: Channel?) {
         channel!!.pipeline()
+            .addLast(SimpleLoggingHandler())
             .addLast(SimpleNetworkHandler())
     }
 

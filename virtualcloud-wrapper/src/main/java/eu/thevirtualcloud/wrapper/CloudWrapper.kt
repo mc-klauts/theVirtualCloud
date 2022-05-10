@@ -28,6 +28,7 @@ import eu.thevirtualcloud.api.CloudAPI
 import eu.thevirtualcloud.api.event.ICloudEventRegistry
 import eu.thevirtualcloud.wrapper.content.CloudDocumentHandler
 import eu.thevirtualcloud.wrapper.content.CloudNetworkHandler
+import eu.thevirtualcloud.wrapper.handler.PacketWrapperHandler
 import eu.thevirtualcloud.wrapper.layout.CloudConsoleLayout
 import eu.thevirtualcloud.wrapper.listeners.CloudShutdownListener
 

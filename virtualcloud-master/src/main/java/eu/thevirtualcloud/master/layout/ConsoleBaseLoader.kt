@@ -53,8 +53,6 @@ class ConsoleBaseLoader {
         for (wrapper in CloudLauncher.instance.getCloudDocumentHandler().readWrappers().getWrappers()) {
             CloudAPI.instance.getCloudConsole().write("Wait for " + ConsoleColorPane.ANSI_BRIGHT_YELLOW + wrapper.name + ConsoleColorPane.ANSI_RESET)
         }
-
-        print(CloudAPI.instance.getCloudConsole().profilePrefix())
         CloudAPI.instance.getCloudCommandHandler().listen(true)
     }
 

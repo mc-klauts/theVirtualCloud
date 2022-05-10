@@ -25,12 +25,15 @@
 package eu.thevirtualcloud.master.handler;
 
 import eu.thevirtualcloud.api.CloudAPI;
+import eu.thevirtualcloud.api.console.impl.ConsoleColorPane;
 import eu.thevirtualcloud.api.content.types.wrapper.CloudWrapper;
 import eu.thevirtualcloud.api.packets.PacketInChannelHandshake;
 import eu.thevirtualcloud.api.packets.PacketOutChannelHandshake;
 import eu.thevirtualcloud.master.CloudLauncher;
 
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * this doc was created on 08.05.2022
@@ -50,8 +53,6 @@ public class PacketMasterHandler {
                     .getCloudDocumentHandler()
                     .readWrappers()
                     .getWrappers()) {
-                System.out.println(wrapper.getName());
-                System.out.println(packetInChannelHandshake.a());
                 if (wrapper.getName().equals(packetInChannelHandshake.a())) {
                     PacketOutChannelHandshake packetOutChannelHandshake = new PacketOutChannelHandshake(Objects
                             .requireNonNull(CloudLauncher
@@ -59,12 +60,15 @@ public class PacketMasterHandler {
                                     .getCloudDocumentHandler()
                                     .getCloudContentDocument()
                                     .getString("cloud.server.host")));
-                    CloudAPI
-                            .getInstance()
-                            .getCloudChannelManager()
-                            .getCloudChannel()
-                            .dispatchPacket(packetOutChannelHandshake);
-                    CloudAPI.getInstance().getCloudConsole().write("");
+                    if (wrapper.getKey().equals(packetInChannelHandshake.b())) {
+                        CloudAPI.getInstance().getCloudConsole().write((wrapper.getName()) + " has " + ConsoleColorPane.ANSI_BRIGHT_GREEN + "successfully " + ConsoleColorPane.ANSI_RESET + "connected");
+                        CloudAPI
+                                .getInstance()
+                                .getCloudChannelManager()
+                                .getCloudChannel()
+                                .dispatchPacket(packetOutChannelHandshake);
+                        System.out.println("NEW PACKET SEND");
+                    }
                 }
             }
         });

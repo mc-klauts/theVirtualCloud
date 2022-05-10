@@ -32,6 +32,7 @@ import eu.thevirtualcloud.api.exceptions.network.ParalyzedChannelException
 import eu.thevirtualcloud.api.network.IChannel
 import eu.thevirtualcloud.api.network.connection.IConnectionComponent
 import eu.thevirtualcloud.api.network.handler.ICloudHandler
+import eu.thevirtualcloud.api.network.impl.SimpleNetworkHandler
 import eu.thevirtualcloud.api.network.protocol.NetworkBuffer
 import eu.thevirtualcloud.api.network.protocol.Packet
 import io.netty.bootstrap.Bootstrap
@@ -121,7 +122,7 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
                     this.remoteBootstrap = Bootstrap()
                         .group(workerGroup)
                         .channel(EpollSocketChannel::class.java)
-                        .handler(SimpleClientChannelInit())
+                        .handler(SimpleNetworkHandler())
                 } else {
                     if (this.threads == -1)
                         this.workerGroup = NioEventLoopGroup() else
@@ -129,7 +130,7 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
                     this.remoteBootstrap = Bootstrap()
                         .group(workerGroup)
                         .channel(NioSocketChannel::class.java)
-                        .handler(SimpleClientChannelInit())
+                        .handler(SimpleNetworkHandler())
                 }
             }
             false -> {
@@ -139,7 +140,7 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
                 this.remoteBootstrap = Bootstrap()
                     .group(workerGroup)
                     .channel(NioSocketChannel::class.java)
-                    .handler(SimpleClientChannelInit())
+                    .handler(SimpleNetworkHandler())
             }
         }
         return this
@@ -183,11 +184,6 @@ class SimpleCloudClient(private val connectionManagement: IConnectionComponent?)
     }
 
     override fun dispatchPacket(packet: Packet<*>): IChannel {
-        val c = packet.toProtocolBuffer()
-        println(c.getRemoteBuffer().readInt())
-        println(c.readString())
-        println(c.readString())
-        println("out")
         this.futureChannel.writeAndFlush(packet.toProtocolBuffer().getRemoteBuffer(), futureChannel.voidPromise())
         return this
     }

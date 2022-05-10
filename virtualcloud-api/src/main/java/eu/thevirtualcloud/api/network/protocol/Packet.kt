@@ -131,6 +131,10 @@ interface Packet<T> {
                 }
             }
         }
+        for (declaredField in obj.javaClass.declaredFields) {
+            if (!declaredField.isAccessible) declaredField.isAccessible = true
+        }
+        @Suppress("UNCHECKED_CAST")
         return obj as T;
     }
 

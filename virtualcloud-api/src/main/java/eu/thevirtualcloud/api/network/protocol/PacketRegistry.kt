@@ -54,8 +54,8 @@ abstract class PacketRegistry {
     }
 
     fun fromID(id: Int, buffer: ByteBuf): Packet<*> {
-        val obj = this.registry[id].getConstructor().newInstance()
-        obj.fromProtocolPuffer(buffer)
+        var obj = this.registry[id].getConstructor().newInstance()
+        obj = obj.fromProtocolPuffer(buffer) as Packet<*>?
         return obj
     }
 

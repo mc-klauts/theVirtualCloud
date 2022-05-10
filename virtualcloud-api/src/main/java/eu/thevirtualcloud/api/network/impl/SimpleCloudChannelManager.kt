@@ -48,7 +48,7 @@ class SimpleCloudChannelManager: ICloudChannelManager {
     private val channelFactory: IChannelFactory = SimpleChannelFactory()
 
     init {
-        Logger.getLogger("io.netty").level = OFF;
+        //Logger.getLogger("io.netty").level = OFF;
     }
 
     private lateinit var cloudChannel: IChannel

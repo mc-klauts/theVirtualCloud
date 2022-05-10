@@ -63,17 +63,14 @@ class CloudNetworkHandler {
             channel
                 .handler(ICloudHandler.getDefaultChannelHandler())
                 .insertChannel()
-                .open()
-
             PacketWrapperHandler()
-            val handshake: PacketInChannelHandshake = PacketInChannelHandshake(
-                CloudWrapper.instance
+            channel.open()
+
+            val handshake: PacketInChannelHandshake = PacketInChannelHandshake(CloudWrapper.instance
                     .getCloudDocumentHandler()
-                    .cloudDocumentContentHandler.name,
-                CloudWrapper.instance
+                    .cloudDocumentContentHandler.name, CloudWrapper.instance
                     .getCloudDocumentHandler()
                     .cloudDocumentContentHandler.key)
-
             this.channel.dispatchPacket(handshake)
         } catch (exception: EmptyInterfaceException) {
             CloudAPI.instance.getCloudConsole().write(ConsoleColorPane.ANSI_BRIGHT_RED + exception.message)
