@@ -22,19 +22,32 @@
  * SOFTWARE.
  */
 
-package org.thevirtualcloud.api.commitment
+import org.jetbrains.annotations.NotNull;
+import org.thevirtualcloud.api.CloudAPI;
+import org.thevirtualcloud.api.commitment.Commitment;
+import org.thevirtualcloud.api.commitment.CommitmentChannel;
 
 /**
- *
  * this doc was created on 11.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
- *
  */
 
-abstract class Commitment<T: java.io.Serializable> {
+public class Test {
 
-    abstract fun handle(handled: T)
+    public Test() {
 
+        CommitmentChannel<String> channel = CloudAPI.getInstance().getCloudCommitmentRegistry().register(String.class);
+
+        channel.dispatch("Hello World!");
+
+        channel.commitment(new Commitment<String>() {
+            @Override
+            public void handle(@NotNull String handled) {
+
+            }
+        });
+
+    }
 }
