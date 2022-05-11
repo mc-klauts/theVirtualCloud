@@ -22,29 +22,25 @@
  * SOFTWARE.
  */
 
-package org.thevirtualcloud.api.network
+package org.thevirtualcloud.api.packets.wrapper
+
+import org.thevirtualcloud.api.network.protocol.Packet
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 11.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudChannelManager {
+class PacketInWrapperCheck(private val a: String, private val b: String, private val c: String): Packet<PacketInWrapperCheck> {
 
-    fun isUsingEpoll(): Boolean
+    fun a(): String = this.a
 
-    fun getCloudChannel(): IChannel
+    fun b(): String = this.b
 
-    fun getCloudChannelFactory(): IChannelFactory
-
-    fun setCloudChannel(channel: IChannel)
-
-    fun setIsServer(b: Boolean)
-
-    fun isServerChannel(): Boolean
+    fun c(): String = this.c
 
 }

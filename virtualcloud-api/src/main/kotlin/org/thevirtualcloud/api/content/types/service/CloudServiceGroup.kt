@@ -24,9 +24,9 @@
 
 package org.thevirtualcloud.api.content.types.service
 
-import org.thevirtualcloud.api.content.RunnerType
-import org.thevirtualcloud.api.content.ServiceType
-import org.thevirtualcloud.api.content.ServiceVersion
+import org.thevirtualcloud.api.manager.groups.RunnerType
+import org.thevirtualcloud.api.manager.groups.ServiceType
+import org.thevirtualcloud.api.manager.groups.ServiceVersion
 
 /**
  *

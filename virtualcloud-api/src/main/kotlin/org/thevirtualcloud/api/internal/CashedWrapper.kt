@@ -22,19 +22,16 @@
  * SOFTWARE.
  */
 
-package org.thevirtualcloud.api.content
+package org.thevirtualcloud.api.internal
 
 /**
  *
- * this doc was created on 07.05.2022
+ * this doc was created on 11.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-enum class ServiceType {
-
-    TEMPLATES, STATIC
-
+class CashedWrapper(val channelID: String, val wrapperName: String) {
 }

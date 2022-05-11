@@ -42,6 +42,7 @@ class SimpleCloudChannelManager: ICloudChannelManager {
 
     private val usingEpoll: Boolean = Epoll.isAvailable()
     private val channelFactory: IChannelFactory = SimpleChannelFactory()
+    private var serverChannel: Boolean = false
 
     init {
         //Logger.getLogger("io.netty").level = OFF;
@@ -57,6 +58,14 @@ class SimpleCloudChannelManager: ICloudChannelManager {
 
     override fun setCloudChannel(channel: IChannel) {
         this.cloudChannel = channel
+    }
+
+    override fun setIsServer(b: Boolean) {
+        this.serverChannel = b
+    }
+
+    override fun isServerChannel(): Boolean {
+        return this.serverChannel
     }
 
 }

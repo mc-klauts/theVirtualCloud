@@ -109,6 +109,7 @@ class SimpleCloudServer(private val connectionManagement: IConnectionComponent?)
 
     override fun insertChannel(): IChannel {
         CloudAPI.instance.getCloudChannelManager().setCloudChannel(this)
+        CloudAPI.instance.getCloudChannelManager().setIsServer(true)
         if (open)
             throw AlreadyRunningException()
         when(CloudAPI.instance.getCloudChannelManager().isUsingEpoll()) {

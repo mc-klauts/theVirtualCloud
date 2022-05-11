@@ -84,10 +84,16 @@ class SimpleNetworkHandler: SimpleChannelInboundHandler<ByteBuf>() {
 
      override fun channelActive(ctx: ChannelHandlerContext?) {
         super.channelActive(ctx)
+         if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
+             DispatcherInterface.dispatchInboundHandle(ctx!!.channel())
+         }
     }
 
      override fun channelInactive(ctx: ChannelHandlerContext?) {
         super.channelInactive(ctx)
+         if (CloudAPI.instance.getCloudChannelManager().getCloudChannel().hasHandler()) {
+             DispatcherInterface.dispatchUnregisterHandle(ctx!!.channel())
+         }
 
     }
 }

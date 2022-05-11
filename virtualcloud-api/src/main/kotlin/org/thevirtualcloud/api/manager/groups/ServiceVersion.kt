@@ -22,29 +22,19 @@
  * SOFTWARE.
  */
 
-package org.thevirtualcloud.api.network
+package org.thevirtualcloud.api.manager.groups
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 07.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudChannelManager {
+enum class ServiceVersion {
 
-    fun isUsingEpoll(): Boolean
-
-    fun getCloudChannel(): IChannel
-
-    fun getCloudChannelFactory(): IChannelFactory
-
-    fun setCloudChannel(channel: IChannel)
-
-    fun setIsServer(b: Boolean)
-
-    fun isServerChannel(): Boolean
+    SPIGOT_1_16, PAPER_1_16
 
 }

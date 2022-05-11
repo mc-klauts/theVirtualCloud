@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package org.thevirtualcloud.api.content
+package org.thevirtualcloud.api.manager.groups
 
 /**
  *
@@ -33,8 +33,8 @@ package org.thevirtualcloud.api.content
  *
  */
 
-enum class RunnerType {
+enum class ServiceType {
 
-    PROXY, SERVER
+    TEMPLATES, STATIC
 
 }

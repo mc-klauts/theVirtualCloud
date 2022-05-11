@@ -22,29 +22,24 @@
  * SOFTWARE.
  */
 
-package org.thevirtualcloud.api.network
+package org.thevirtualcloud.api.manager.groups
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 11.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudChannelManager {
+class SimpleCloudGroup(val name: String,val wrapper: String,val spigotServer: Boolean, val template: Boolean = false) {
 
-    fun isUsingEpoll(): Boolean
-
-    fun getCloudChannel(): IChannel
-
-    fun getCloudChannelFactory(): IChannelFactory
-
-    fun setCloudChannel(channel: IChannel)
-
-    fun setIsServer(b: Boolean)
-
-    fun isServerChannel(): Boolean
+    val maxServers = -1
+    val minServers = 1
+    val needToStart = -1
+    val available: Boolean = false
+    val maintenance: Boolean = true
+    val maxPlayers = 20
 
 }

@@ -135,5 +135,13 @@ class SimpleCommandHandler: ICloudCommandHandler {
         return build.substring(0, build.lastIndexOf(",")).plus(")")
     }
 
+    override fun argsArray(args: Array<String>): String {
+        var build = ConsoleColorPane.ANSI_RESET + "(" + ConsoleColorPane.ANSI_BRIGHT_GREEN
+        for (arg in args) {
+            build = build.plus(ConsoleColorPane.ANSI_BRIGHT_GREEN + arg + ConsoleColorPane.ANSI_RESET + ", ")
+        }
+        return build.substring(0, build.lastIndexOf(",")).plus(")")
+    }
+
 
 }

@@ -28,6 +28,7 @@ import org.thevirtualcloud.api.commands.ICloudCommandHandler
 import org.thevirtualcloud.api.commands.impl.SimpleCommandHandler
 import org.thevirtualcloud.api.commitment.ICommitmentRegistry
 import org.thevirtualcloud.api.commitment.impl.SimpleCommitmentRegistry
+import org.thevirtualcloud.api.common.IUIDDabble
 import org.thevirtualcloud.api.config.IConfigurationFactory
 import org.thevirtualcloud.api.config.impl.SimpleConfigurationFactory
 import org.thevirtualcloud.api.console.ICloudConsole
@@ -44,6 +45,7 @@ import org.thevirtualcloud.api.network.IRegistryDispatcher
 import org.thevirtualcloud.api.network.impl.SimpleCloudChannelManager
 import org.thevirtualcloud.api.network.impl.SimplePacketRegistry
 import org.thevirtualcloud.api.network.protocol.PacketRegistry
+import java.util.*
 
 /**
  *
@@ -54,7 +56,7 @@ import org.thevirtualcloud.api.network.protocol.PacketRegistry
  *
  */
 
-class CloudAPI {
+class CloudAPI: IUIDDabble {
 
     private val cloudChannelManager: ICloudChannelManager = SimpleCloudChannelManager()
     private val cloudEventManager: ICloudEventManager = SimpleCloudEventManager()
@@ -65,6 +67,8 @@ class CloudAPI {
     private val cloudPacketRegistry: PacketRegistry = SimplePacketRegistry()
     private val cloudCommitmentRegistry: ICommitmentRegistry = SimpleCommitmentRegistry()
     private val databaseAdapter: IDatabaseAdapter = DatabaseAdapter("localhost", "cloud", "virtualcloud-development", "72mwG3ATkah088R")
+
+    private val sessionID = UUID.randomUUID()
 
     companion object {
         @JvmStatic
@@ -94,5 +98,7 @@ class CloudAPI {
     fun getCloudEventManager(): ICloudEventManager = this.cloudEventManager
 
     fun getDatabaseAdapter(): IDatabaseAdapter = this.databaseAdapter
+
+    override fun getUID(): UUID = this.sessionID
 
 }

@@ -28,6 +28,10 @@ import org.thevirtualcloud.api.CloudAPI
 import org.thevirtualcloud.api.network.IRegistryDispatcher
 import org.thevirtualcloud.api.packets.PacketInChannelHandshake
 import org.thevirtualcloud.api.packets.PacketOutChannelHandshake
+import org.thevirtualcloud.api.packets.groups.PacketOutWrapperGroupCreate
+import org.thevirtualcloud.api.packets.groups.PacketOutWrapperGroupStart
+import org.thevirtualcloud.api.packets.wrapper.PacketInWrapperCheck
+import org.thevirtualcloud.api.packets.wrapper.PacketOutWrapperCheck
 
 /**
  *
@@ -43,6 +47,10 @@ class SimpleRegistryDispatcher: IRegistryDispatcher {
     override fun dispatch() {
         CloudAPI.instance.getCloudPacketRegistry().registerPacket(PacketInChannelHandshake::class.java)
         CloudAPI.instance.getCloudPacketRegistry().registerPacket(PacketOutChannelHandshake::class.java)
+        CloudAPI.instance.getCloudPacketRegistry().registerPacket(PacketInWrapperCheck::class.java)
+        CloudAPI.instance.getCloudPacketRegistry().registerPacket(PacketOutWrapperCheck::class.java)
+        CloudAPI.instance.getCloudPacketRegistry().registerPacket(PacketOutWrapperGroupCreate::class.java)
+        CloudAPI.instance.getCloudPacketRegistry().registerPacket(PacketOutWrapperGroupStart::class.java)
     }
 
 }

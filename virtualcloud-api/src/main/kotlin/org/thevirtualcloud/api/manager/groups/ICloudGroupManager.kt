@@ -22,29 +22,29 @@
  * SOFTWARE.
  */
 
-package org.thevirtualcloud.api.network
+package org.thevirtualcloud.api.manager.groups
+
+import java.io.File
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 11.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudChannelManager {
+interface ICloudGroupManager {
 
-    fun isUsingEpoll(): Boolean
+    fun createGroup(group: SimpleCloudGroup)
 
-    fun getCloudChannel(): IChannel
+    fun existsGroup(name: String): Boolean
 
-    fun getCloudChannelFactory(): IChannelFactory
+    fun getGroupFromFile(name: String): SimpleCloudGroup?
 
-    fun setCloudChannel(channel: IChannel)
+    fun listGroups(): List<SimpleCloudGroup>?
 
-    fun setIsServer(b: Boolean)
-
-    fun isServerChannel(): Boolean
+    fun listFiles(): List<File>?
 
 }

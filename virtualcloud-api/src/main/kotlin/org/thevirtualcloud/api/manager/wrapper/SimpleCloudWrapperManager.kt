@@ -22,29 +22,21 @@
  * SOFTWARE.
  */
 
-package org.thevirtualcloud.api.network
+package org.thevirtualcloud.api.manager.wrapper
 
 /**
  *
- * this doc was created on 05.05.2022
+ * this doc was created on 11.05.2022
  * This class belongs to the theVirtualCloud project
  *
  * @author Generix030
  *
  */
 
-interface ICloudChannelManager {
+class SimpleCloudWrapperManager: ICloudWrapperManager {
 
-    fun isUsingEpoll(): Boolean
-
-    fun getCloudChannel(): IChannel
-
-    fun getCloudChannelFactory(): IChannelFactory
-
-    fun setCloudChannel(channel: IChannel)
-
-    fun setIsServer(b: Boolean)
-
-    fun isServerChannel(): Boolean
+    override fun getConnectedWrappers(): List<String> {
+        TODO("Not yet implemented")
+    }
 
 }

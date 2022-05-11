@@ -57,4 +57,6 @@ interface ICloudCommandHandler {
 
     fun args(vararg args: String): String
 
+    fun argsArray(args: Array<String>): String
+
 }

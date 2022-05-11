@@ -26,7 +26,11 @@ package org.thevirtualcloud.wrapper.handler;
 
 import org.thevirtualcloud.api.CloudAPI;
 import org.thevirtualcloud.api.console.impl.ConsoleColorPane;
+import org.thevirtualcloud.api.internal.CashedWrapper;
 import org.thevirtualcloud.api.packets.PacketOutChannelHandshake;
+import org.thevirtualcloud.api.packets.wrapper.PacketInWrapperCheck;
+import org.thevirtualcloud.api.packets.wrapper.PacketOutWrapperCheck;
+import org.thevirtualcloud.wrapper.CloudWrapper;
 
 /**
  * this doc was created on 08.05.2022
@@ -38,13 +42,11 @@ import org.thevirtualcloud.api.packets.PacketOutChannelHandshake;
 public class PacketWrapperHandler {
 
     public PacketWrapperHandler() {
-
         CloudAPI.getInstance()
                 .getCloudChannelManager()
                 .getCloudChannel()
                 .handler()
                 .onPacketHandle(PacketOutChannelHandshake.class, raw -> {
-                    System.out.println("TEST");
                     PacketOutChannelHandshake packetOutChannelHandshake = (PacketOutChannelHandshake) raw;
                     CloudAPI.instance
                             .getCloudConsole()
@@ -56,6 +58,20 @@ public class PacketWrapperHandler {
                                     packetOutChannelHandshake.a() +
                                     ConsoleColorPane.ANSI_RESET + ")");
                 });
+        CloudAPI.getInstance().getCloudChannelManager().getCloudChannel().handler().onPacketHandle(PacketOutWrapperCheck.class, raw -> {
+            PacketOutWrapperCheck receivedPacket = (PacketOutWrapperCheck) raw;
+            PacketInWrapperCheck packetInWrapperCheck = new PacketInWrapperCheck(CloudWrapper.getInstance()
+                    .getCloudDocumentHandler()
+                    .readConfiguration()
+                    .getName(),
+                    CloudAPI.getInstance()
+                            .getCloudChannelManager()
+                            .getCloudChannel()
+                            .connection()
+                            .id()
+                            .asLongText(), receivedPacket.a());
+            CloudAPI.getInstance().getCloudChannelManager().getCloudChannel().dispatchPacket(packetInWrapperCheck);
+        });
 
     }
 }
