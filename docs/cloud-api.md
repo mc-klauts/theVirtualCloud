@@ -29,4 +29,4 @@ To receive objects of the same type, create a new object that implements the Com
     }
 });`
 
-In a commitment, handled is the object that is received.
+In a commitment, `handled` is the object that is received.
