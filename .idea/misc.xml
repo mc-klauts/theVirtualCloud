@@ -6,6 +6,7 @@
         <option value="$PROJECT_DIR$/virtualcloud-api/pom.xml" />
         <option value="$PROJECT_DIR$/virtualcloud-master/pom.xml" />
         <option value="$PROJECT_DIR$/virtualcloud-wrapper/pom.xml" />
+        <option value="$PROJECT_DIR$/virtualcloud-bridge/pom.xml" />
       </list>
     </option>
   </component>

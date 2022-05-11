@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/virtualcloud-api/virtualcloud-api.iml" filepath="$PROJECT_DIR$/virtualcloud-api/virtualcloud-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/virtualcloud-bridge/virtualcloud-bridge.iml" filepath="$PROJECT_DIR$/virtualcloud-bridge/virtualcloud-bridge.iml" />
       <module fileurl="file://$PROJECT_DIR$/virtualcloud-master/virtualcloud-master.iml" filepath="$PROJECT_DIR$/virtualcloud-master/virtualcloud-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/virtualcloud-wrapper/virtualcloud-wrapper.iml" filepath="$PROJECT_DIR$/virtualcloud-wrapper/virtualcloud-wrapper.iml" />
     </modules>

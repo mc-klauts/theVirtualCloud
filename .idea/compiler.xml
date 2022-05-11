@@ -6,12 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="virtualcloud-bridge" />
         <module name="virtualcloud-api" />
         <module name="virtualcloud-wrapper" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="virtualcloud-api" target="16" />
+      <module name="virtualcloud-bridge" target="16" />
       <module name="virtualcloud-master" target="16" />
       <module name="virtualcloud-wrapper" target="16" />
     </bytecodeTargetLevel>
