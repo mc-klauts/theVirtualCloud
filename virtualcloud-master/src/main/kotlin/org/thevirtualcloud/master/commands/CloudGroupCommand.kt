@@ -38,7 +38,6 @@ import org.thevirtualcloud.api.commands.ICloudCommand
 class CloudGroupCommand: ICloudCommand {
 
     override fun onHandle(arguments: Array<String>) {
-        TODO("Not yet implemented")
     }
 
     override fun description(): String {

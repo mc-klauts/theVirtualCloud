@@ -40,6 +40,8 @@ import org.thevirtualcloud.api.database.impl.DatabaseAdapter
 import org.thevirtualcloud.api.event.ICloudEventManager
 import org.thevirtualcloud.api.event.impl.SimpleCloudEventManager
 import org.thevirtualcloud.api.event.impl.types.CloudAPIBootEvent
+import org.thevirtualcloud.api.manager.groups.ICloudGroupManager
+import org.thevirtualcloud.api.manager.groups.SimpleCloudGroupManager
 import org.thevirtualcloud.api.network.ICloudChannelManager
 import org.thevirtualcloud.api.network.IRegistryDispatcher
 import org.thevirtualcloud.api.network.impl.SimpleCloudChannelManager
@@ -67,6 +69,7 @@ class CloudAPI: IUIDDabble {
     private val cloudPacketRegistry: PacketRegistry = SimplePacketRegistry()
     private val cloudCommitmentRegistry: ICommitmentRegistry = SimpleCommitmentRegistry()
     private val databaseAdapter: IDatabaseAdapter = DatabaseAdapter("localhost", "cloud", "virtualcloud-development", "72mwG3ATkah088R")
+    private val cloudGroupManager: ICloudGroupManager = SimpleCloudGroupManager()
 
     private val sessionID = UUID.randomUUID()
 
@@ -82,6 +85,8 @@ class CloudAPI: IUIDDabble {
     }
 
     fun getCloudContentLoader(): IContentLoader = this.cloudContentLoader
+
+    fun getCloudGroupManager(): ICloudGroupManager = this.cloudGroupManager
 
     fun getCloudCommitmentRegistry(): ICommitmentRegistry = this.cloudCommitmentRegistry
 
